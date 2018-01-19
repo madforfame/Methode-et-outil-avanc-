@@ -830,69 +830,75 @@ void XMLformating(char* nomfichier)
     char c, c1, c2, c3, c4, c5, c6, c7, widthTag, heightTag, highscoresTag;
     int start=0, End=0, flag1=0, flag2=0, widthflag=0, heightflag=0, highscoresflag=0;
     FILE *file= fopen(nomfichier, "r");
-    fscanf(file,"< Configurations %c", &c);
-    if(c=='>'){
-        flag1=1;
-        start=ftell(file);
-    }
-    else{
-        while(fscanf(file,"%c", &c1)!=EOF){
-            fscanf(file,"< Configurations %c", &c2);
-            if(c2=='>'){
-                flag1=1;
-                start=ftell(file);
-                break;
-            }
-        }
-    }
-    while(fscanf(file,"%c", &c3)!=EOF){
-        fscanf(file,"< / Configurations %c", &c4);
-        if(c4=='>'){
-            flag2=1;
-            End=ftell(file);
-            break;
-        }
-    }
-    if(flag1==1 && flag2==1)
-    {
-        fseek(file,start,SEEK_SET);
-        while(fscanf(file,"%c", &c5)!=EOF){
-            fscanf(file,"< Width >%d < / Width %c", &width, &widthTag);
-            if( (widthTag=='>') && (width>=4) && ftell(file)<End ) {
-            	widthflag=1;
-            	break;
-            }
-        }
-        fseek(file,start,SEEK_SET);
-        while(fscanf(file,"%c", &c6)!=EOF){
-            fscanf(file,"< Height >%d < / Height %c", &height, &heightTag);
-            if( (heightTag=='>') && (height>=4) && ftell(file)<End ) {
-            	heightflag=1;
-            	break;
-            }
-        }
-        fseek(file,start,SEEK_SET);
-        while(fscanf(file,"%c", &c7)!=EOF){
-            fscanf(file,"< Highscores >%d < / Highscores %c", &highscores, &highscoresTag);
-            if( (highscoresTag=='>') && (highscores>=4) && ftell(file)<End ) {
-            	highscoresflag=1;
-            	break;
-            }
-        }
-    }
-    if(width==0 || widthflag==0){
-        width=7;
-        printf("Incorrect file format, default value of width (7) is loaded\n");
-    }
-    if(height==0 || heightflag==0){
-        height=6;
-        printf("Incorrect file format, default value of height (6) is loaded\n");
-    }
-    if(highscores==0 || highscoresflag==0){
-        highscores=5;
-        printf("Incorrect file format, default value of highscore list (5) is loaded\n");
-    }
-    fclose(file);
+    if (file == NULL){
+		perror("Le fichier xml ne peut être ouvert ou n'existe pas");
+		exit(0);
+	}
+	else{
+		fscanf(file,"< Configurations %c", &c);
+		if(c=='>'){
+			flag1=1;
+			start=ftell(file);
+		}
+		else{
+			while(fscanf(file,"%c", &c1)!=EOF){
+				fscanf(file,"< Configurations %c", &c2);
+				if(c2=='>'){
+					flag1=1;
+					start=ftell(file);
+					break;
+				}
+			}
+		}
+		while(fscanf(file,"%c", &c3)!=EOF){
+			fscanf(file,"< / Configurations %c", &c4);
+			if(c4=='>'){
+				flag2=1;
+				End=ftell(file);
+				break;
+			}
+		}
+		if(flag1==1 && flag2==1)
+		{
+			fseek(file,start,SEEK_SET);
+			while(fscanf(file,"%c", &c5)!=EOF){
+				fscanf(file,"< Width >%d < / Width %c", &width, &widthTag);
+				if( (widthTag=='>') && (width>=4) && ftell(file)<End ) {
+					widthflag=1;
+					break;
+				}
+			}
+			fseek(file,start,SEEK_SET);
+			while(fscanf(file,"%c", &c6)!=EOF){
+				fscanf(file,"< Height >%d < / Height %c", &height, &heightTag);
+				if( (heightTag=='>') && (height>=4) && ftell(file)<End ) {
+					heightflag=1;
+					break;
+				}
+			}
+			fseek(file,start,SEEK_SET);
+			while(fscanf(file,"%c", &c7)!=EOF){
+				fscanf(file,"< Highscores >%d < / Highscores %c", &highscores, &highscoresTag);
+				if( (highscoresTag=='>') && (highscores>=4) && ftell(file)<End ) {
+					highscoresflag=1;
+					break;
+				}
+			}
+		}
+		if(width==0 || widthflag==0){
+			width=7;
+			printf("Incorrect file format, default value of width (7) is loaded\n");
+		}
+		if(height==0 || heightflag==0){
+			height=6;
+			printf("Incorrect file format, default value of height (6) is loaded\n");
+		}
+		if(highscores==0 || highscoresflag==0){
+			highscores=5;
+			printf("Incorrect file format, default value of highscore list (5) is loaded\n");
+		}
+		fclose(file);
+	}
 }
 void highscore(int high)
 {
