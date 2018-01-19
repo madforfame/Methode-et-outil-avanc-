@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #define VIDE ' '
-
 int width=0, height=0, highscores=0;
 
 void print(char **board);
@@ -96,7 +95,7 @@ int main(int argc, char *argv[])
                     saveLoad(&num, board);
                     num = checknum(num,board);
                     if(checkCol(num,board)){
-                        while(board[0][num-1]!='\0')
+                        while(board[0][num-1]!=VIDE)
                           {
                             print(board);
                             printf("Invalid input. Do another move : ");
@@ -155,7 +154,7 @@ int main(int argc, char *argv[])
                     saveLoad(&num, board);
                     num = checknum(num,board);
                     if(checkCol(num,board)){
-                        while(board[0][num-1]!='\0')
+                        while(board[0][num-1]!=VIDE)
                           {
                             print(board);
                             printf("Invalid input. Do another move : ");
@@ -241,7 +240,7 @@ int main(int argc, char *argv[])
                 saveLoad(&num, board);
                 num = checknum(num,board);
                 if(checkCol(num,board)){
-                    while(board[0][num-1]!='\0')
+                    while(board[0][num-1]!=VIDE)
                       {
                         print(board);
                         printf("Invalid input. Do another move : ");
@@ -305,7 +304,7 @@ int main(int argc, char *argv[])
                             compUndoCounter += 1;
                             c--;
                             d--;
-                            board[compUndoRow[c]][compUndoCol[d]] = '\0';
+                            board[compUndoRow[c]][compUndoCol[d]] = VIDE;
                         }
                         break;
                     }
@@ -326,7 +325,7 @@ int main(int argc, char *argv[])
                             compUndoCounter += 1;
                             c--;
                             d--;
-                            board[compUndoRow[c]][compUndoCol[d]] = '\0';
+                            board[compUndoRow[c]][compUndoCol[d]] = VIDE;
                         }
                         break;
                     }
@@ -341,7 +340,7 @@ int main(int argc, char *argv[])
                             compUndoCounter += 1;
                             c--;
                             d--;
-                            board[compUndoRow[c]][compUndoCol[d]] = '\0';
+                            board[compUndoRow[c]][compUndoCol[d]] = VIDE;
                         }
                         break;
                     }
@@ -389,7 +388,10 @@ void print(char **board)
         printf("\n|");
         for(j=0; j<width; j++)
         {
+
             printf(" %c |", board[i][j]);
+        	
+        	
         }
     }
     printf("\n+");
@@ -419,7 +421,7 @@ void player(char **board, int num, char character)
     int i;
     for(i=(height-1); i>=0;i--)
     {
-        if(board[i][num-1]=='\0')
+        if(board[i][num-1]==VIDE)
         {
             board[i][num-1] = character;
             break;
@@ -434,7 +436,7 @@ int checkfull(char **board)
     {
         for(j=0; j<width; j++)
         {
-            if(board[i][j] == '\0')
+            if(board[i][j] == VIDE)
             {
                 return 1;
             }
@@ -505,7 +507,7 @@ int rowNum(int num, char **board){
         if(num == 0){
         	return 0;
         }
-        if(board[i][num-1]!='\0'){
+        if(board[i][num-1]!=VIDE){
         	break;
         }
     }
@@ -515,7 +517,7 @@ int checkEmpty(char **board){
     int n, m;
     for(n=0;n<height;n++){
         for(m=0;m<width;m++){
-            if(board[n][m] != '\0'){
+            if(board[n][m] !=VIDE){
             	return 0;
             }
         }
@@ -525,7 +527,7 @@ int checkEmpty(char **board){
 int checkCol(int num, char **board){
     int i, counter=0;
     for(i=height-1;i>=0;i--){
-        if(board[i][num-1] == '\0'){
+        if(board[i][num-1] == VIDE){
             counter = 0;
             break;
         }
@@ -552,7 +554,7 @@ void undoRedo(char *x, char **board, int num, int *undoCol,
         }
         if(num == 0){
             ccounter +=1;
-            board[undoRow[(*q-1)]][undoCol[(*q-1)]] = '\0';
+            board[undoRow[(*q-1)]][undoCol[(*q-1)]] = VIDE;
             print(board);
             *q-=1;
             *z-=1;
@@ -588,20 +590,20 @@ void Easy(char **board, int *num)
     l = rand() % width;
     for(i=(height-1); i>=0; i--)
     {
-        if(board[i][l]=='\0')
+        if(board[i][l]==VIDE)
         {
             board[i][l] = 'O';
             break;
         }
         flag = 0;
-        while(i==0 && board[i][l]!='\0')
+        while(i==0 && board[i][l]!=VIDE)
         {
             l = rand() % width;
             flag = 1;
         }
         for(j=(height-1); flag==1; j--)
         {
-            if(board[j][l]=='\0')
+            if(board[j][l]==VIDE)
             {
                 board[j][l] = 'O';
                 break;
@@ -612,10 +614,10 @@ void Easy(char **board, int *num)
 }
 int checkEmpty1(char **board,int num,int numOfrow)
 {
-    if(numOfrow==(height-1) && board[numOfrow][num]=='\0'){
+    if(numOfrow==(height-1) && board[numOfrow][num]==VIDE){
     	return 1;
     }
-    else if(board[numOfrow+1][num]!='\0' && board[numOfrow][num]=='\0'){
+    else if(board[numOfrow+1][num]!=VIDE && board[numOfrow][num]==VIDE){
     	return 1;
     }
     return 0;
@@ -627,7 +629,7 @@ int Medium(char **board, char character, int *num)
     {
         for(j=0; j<width; j++)
         {
-            if(board[i][j] == character && board[i-1][j] == character && board[i-2][j] == character && board[i-3][j]=='\0')
+            if(board[i][j] == character && board[i-1][j] == character && board[i-2][j] == character && board[i-3][j]==VIDE)
             {
                 board[i-3][j] = 'O';
                 *num = j+1;
@@ -729,7 +731,7 @@ void Hard(char **board, int *num)
     {
         for(j=0; j<width; j++)
         {
-            if(board[i][j] == 'O' && board[i-1][j] == 'O' && board[i-2][j]=='\0')
+            if(board[i][j] == 'O' && board[i-1][j] == 'O' && board[i-2][j]==VIDE)
             {
                 board[i-2][j] = 'O';
                 *num = j+1;
