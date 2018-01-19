@@ -617,6 +617,11 @@ int checkEmpty1(char **board,int num,int numOfrow)
     if(numOfrow==(height-1) && board[numOfrow][num]==VIDE){
     	return 1;
     }
+    else if(numOfrow+1==height){
+        if(board[numOfrow][num]==VIDE){
+            return 1;
+        }
+    }
     else if(board[numOfrow+1][num]!=VIDE && board[numOfrow][num]==VIDE){
     	return 1;
     }
@@ -918,6 +923,7 @@ void highscore(int high)
         	   break;
             }
         }while(i<highscores);
+
         while(highscores>i){
     	   highs[i]=0;
     	   i++;
