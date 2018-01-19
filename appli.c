@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
                 saveLoad(&num, board);
                 num = checknum(num,board);
                 if(checkCol(num,board)){
-                    while(board[0][num-1]!=VIDE)
+                    while(board[0][num-1]!=VIDE && num!=-1 && num!=-2 && num!=-3)
                       {
                         print(board);
                         printf("Invalid input. Do another move : ");
@@ -903,42 +903,47 @@ void highscore(int high)
     int i=0, n=0, temp;
     int highs[highscores];
     FILE *highsc = fopen("highscores.text", "r");
-    fscanf(highsc, "%d", &highs[i]);
-    do
-    {
-        i++;
-        if(fscanf(highsc, "%d", &n)!=EOF){
-        	highs[i]=n;
-        }
-        else {
-        	break;
-        }
-    }while(i<highscores);
-    while(highscores>i){
-    	highs[i]=0;
-    	i++;
+    if (highsc == NULL){
+        perror("Le fichier de highscore highscores.text ne peut être ouvert ou n'existe pas \n");
     }
-    i--;
-    if(high>highs[i])
-    {
-        highs[i] = high;
-    }
-    while(highs[i]>highs[i-1] && i>0)
-    {
-        temp = highs[i-1];
-        highs[i-1] = highs[i];
-        highs[i] = temp;
+    else{
+        fscanf(highsc, "%d", &highs[i]);
+        do
+        {
+           i++;
+            if(fscanf(highsc, "%d", &n)!=EOF){
+                highs[i]=n;
+            }
+            else {
+        	   break;
+            }
+        }while(i<highscores);
+        while(highscores>i){
+    	   highs[i]=0;
+    	   i++;
+        }
         i--;
+        if(high>highs[i])
+        {
+            highs[i] = high;
+        }
+        while(highs[i]>highs[i-1] && i>0)
+        {
+            temp = highs[i-1];
+            highs[i-1] = highs[i];
+            highs[i] = temp;
+            i--;
+        }
+        highsc = fopen("highscores.text", "w");
+        printf("\n\t      High Scores\n\t\t*****");
+        for(i=0; i<highscores; i++)
+        {
+            fprintf(highsc,"%d ", highs[i]);
+            printf("\n\t\t* %d *", highs[i]);
+        }
+        printf("\n\t\t*****");
+        fclose(highsc);
     }
-    highsc = fopen("highscores.text", "w");
-    printf("\n\t      High Scores\n\t\t*****");
-    for(i=0; i<highscores; i++)
-    {
-        fprintf(highsc,"%d ", highs[i]);
-        printf("\n\t\t* %d *", highs[i]);
-    }
-    printf("\n\t\t*****");
-    fclose(highsc);
 }
 void saveLoad(int *num, char **board){
     FILE *pfile;
