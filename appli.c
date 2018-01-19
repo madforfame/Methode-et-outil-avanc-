@@ -955,13 +955,17 @@ void saveLoad(int *num, char **board){
     }
     if(*num == -1){
         pfile = fopen("save.txt", "r");
-        for(r=height-1;r>=0;r--){
-            for(t=width-1;t>=0;t--){
-                fscanf(pfile, "%c", &board[r][t]);
-            }
-        }
-        fclose(pfile);
-        print(board);
+        if (pfile == NULL){
+		perror("Le fichier de sauvegarde save.txt ne peut être ouvert ou n'existe pas \n");
+		}
+		else{
+			for(r=height-1;r>=0;r--){
+				for(t=width-1;t>=0;t--){
+					fscanf(pfile, "%c", &board[r][t]);
+				}
+			}
+			fclose(pfile);
+		}
     }
 }
 
