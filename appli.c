@@ -30,10 +30,10 @@ void XMLformating();
 void highscore(int high);
 void saveLoad(int *num, char **board);
 
-int main()
+int main(int argc, char *argv[])
 {
     int high=0;
-    XMLformating();
+    XMLformating(argv[1]);
     char playAgain;
     do{
         int flag, score1=0, score2=0, *compUndoCol, undoCounter=0,
@@ -825,11 +825,11 @@ int numO(char **board){
     }
     return counter;
 }
-void XMLformating()
+void XMLformating(char* nomfichier)
 {
     char c, c1, c2, c3, c4, c5, c6, c7, widthTag, heightTag, highscoresTag;
     int start=0, End=0, flag1=0, flag2=0, widthflag=0, heightflag=0, highscoresflag=0;
-    FILE *file= fopen("config1.xml", "r");
+    FILE *file= fopen(nomfichier, "r");
     fscanf(file,"< Configurations %c", &c);
     if(c=='>'){
         flag1=1;
