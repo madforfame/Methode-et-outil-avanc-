@@ -188,7 +188,9 @@ int main()
                                     printf("\ncannot redo!! play again");
                                     scanf("%d", &num);
                                     saveLoad(&num, board);
-                                    if(num == 0){break;}
+                                    if(num == 0){
+                                    	break;
+                                    }
                                 }
                             }
                         }
@@ -309,7 +311,9 @@ int main()
                     case 2: {
                         if(num != 0 && num != -1 && num != -2){
                             flag=0;
-                            if(Medium(board,x,&num)==1){flag=1;}
+                            if(Medium(board,x,&num)==1){
+                            	flag=1;
+                            }
                             if(flag!=1){
                             	Easy(board, &num);
                             }
@@ -384,7 +388,12 @@ void print(char **board)
         printf("\n|");
         for(j=0; j<width; j++)
         {
-            printf(" %c |", board[i][j]);
+        	if(board[i][j]=='X' || board[i][j]=='O'){
+            	printf(" %c |", board[i][j]);
+        	
+        	}else{
+        		printf("   |");
+        	}
         }
     }
     printf("\n+");
@@ -394,7 +403,7 @@ void print(char **board)
     }
     printf("\n");
     for(i=1;i<=width;i++){
-        printf("   %d",i);
+        printf("  %d ",i);
     }
     printf("\n\n\n");
 }
@@ -405,7 +414,7 @@ int checknum(int num, char **board)
         print(board);
         printf("\nPlease enter a number between 1 and %d :", width);
         scanf("%d", &num);
-        }
+    }
     return num;
 }
 
@@ -799,7 +808,7 @@ int numX(char **board){
     for(i=height-1;i>=0;i--){
         for(j=width-1;j>=0;j--){
             if(board[i][j] == 'X'){;
-            counter+=1;
+            	counter+=1;
             }
         }
     }
@@ -810,7 +819,7 @@ int numO(char **board){
     for(i=height-1;i>=0;i--){
         for(j=width-1;j>=0;j--){
             if(board[i][j] == 'O'){;
-            counter+=1;
+            	counter+=1;
             }
         }
     }
@@ -849,17 +858,26 @@ void XMLformating()
         fseek(file,start,SEEK_SET);
         while(fscanf(file,"%c", &c5)!=EOF){
             fscanf(file,"< Width >%d < / Width %c", &width, &widthTag);
-            if( (widthTag=='>') && (width>=4) && ftell(file)<End ) {widthflag=1; break;}
+            if( (widthTag=='>') && (width>=4) && ftell(file)<End ) {
+            	widthflag=1;
+            	break;
+            }
         }
         fseek(file,start,SEEK_SET);
         while(fscanf(file,"%c", &c6)!=EOF){
             fscanf(file,"< Height >%d < / Height %c", &height, &heightTag);
-            if( (heightTag=='>') && (height>=4) && ftell(file)<End ) {heightflag=1; break;}
+            if( (heightTag=='>') && (height>=4) && ftell(file)<End ) {
+            	heightflag=1;
+            	break;
+            }
         }
         fseek(file,start,SEEK_SET);
         while(fscanf(file,"%c", &c7)!=EOF){
             fscanf(file,"< Highscores >%d < / Highscores %c", &highscores, &highscoresTag);
-            if( (highscoresTag=='>') && (highscores>=4) && ftell(file)<End ) {highscoresflag=1; break;}
+            if( (highscoresTag=='>') && (highscores>=4) && ftell(file)<End ) {
+            	highscoresflag=1;
+            	break;
+            }
         }
     }
     if(width==0 || widthflag==0){
@@ -892,7 +910,10 @@ void highscore(int high)
         	break;
         }
     }while(i<highscores);
-    while(highscores>i){highs[i]=0;i++;}
+    while(highscores>i){
+    	highs[i]=0;
+    	i++;
+    }
     i--;
     if(high>highs[i])
     {
