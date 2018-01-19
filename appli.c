@@ -69,6 +69,7 @@ int main()
 	board = (char **)malloc(height*sizeof(char *));
         for(i=0; i<height; i++)
         {
+        	board[i]=malloc(width*sizeof(char));
             for(j=0; j<width; j++)
             {
                 board[i][j]= '\0';
@@ -230,8 +231,8 @@ int main()
             }
             print(board);
             do{
-	        printf("\nif you want to undo, press 0\n");
-	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
+	        	printf("\nif you want to undo, press 0\n");
+		        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
                 printf("\nenter number of the column:");
                 scanf("%d", &num);
                 saveLoad(&num, board);
@@ -309,7 +310,9 @@ int main()
                         if(num != 0 && num != -1 && num != -2){
                             flag=0;
                             if(Medium(board,x,&num)==1){flag=1;}
-                            if(flag!=1){Easy(board, &num);}
+                            if(flag!=1){
+                            	Easy(board, &num);
+                            }
                             compUndoCol[d++] = num-1 ;
                             compUndoRow[c++] = rowNum(num,board)+1;
                             compUndoCounter = 0;
@@ -494,8 +497,12 @@ int diagonal1(char **board, char character){
 int rowNum(int num, char **board){
     int i=0;
     for(i=0;i<height;i++){
-        if(num == 0){return 0;}
-        if(board[i][num-1]!='\0'){break;}
+        if(num == 0){
+        	return 0;
+        }
+        if(board[i][num-1]!='\0'){
+        	break;
+        }
     }
     return i-1;
 }
@@ -503,7 +510,9 @@ int checkEmpty(char **board){
     int n, m;
     for(n=0;n<height;n++){
         for(m=0;m<width;m++){
-            if(board[n][m] != '\0'){return 0;}
+            if(board[n][m] != '\0'){
+            	return 0;
+            }
         }
     }
     return 1;
@@ -598,8 +607,12 @@ void Easy(char **board, int *num)
 }
 int checkEmpty1(char **board,int num,int numOfrow)
 {
-    if(numOfrow==(height-1) && board[numOfrow][num]=='\0'){return 1;}
-    else if(board[numOfrow+1][num]!='\0' && board[numOfrow][num]=='\0'){return 1;}
+    if(numOfrow==(height-1) && board[numOfrow][num]=='\0'){
+    	return 1;
+    }
+    else if(board[numOfrow+1][num]!='\0' && board[numOfrow][num]=='\0'){
+    	return 1;
+    }
     return 0;
 }
 int Medium(char **board, char character, int *num)
@@ -695,13 +708,18 @@ int Medium(char **board, char character, int *num)
             }
         }
     }
+    return 0;
 }
 void Hard(char **board, int *num)
 {
     int i, j;
     char x='X',o='O';
-    if(Medium(board,x,num)==1)return;
-    if(Medium(board,o,num)==1)return;
+    if(Medium(board,x,num)==1){
+    	return;
+    }
+    if(Medium(board,o,num)==1){
+    	return;
+    }
     for(i=height-1; i>=2; i--)
     {
         for(j=0; j<width; j++)
@@ -800,7 +818,7 @@ int numO(char **board){
 }
 void XMLformating()
 {
-    char g, c, c1, c2, c3, c4, c5, c6, c7, widthTag, heightTag, highscoresTag;
+    char c, c1, c2, c3, c4, c5, c6, c7, widthTag, heightTag, highscoresTag;
     int start=0, End=0, flag1=0, flag2=0, widthflag=0, heightflag=0, highscoresflag=0;
     FILE *file= fopen("config1.xml", "r");
     fscanf(file,"< Configurations %c", &c);
@@ -867,8 +885,12 @@ void highscore(int high)
     do
     {
         i++;
-        if(fscanf(highsc, "%d", &n)!=EOF){highs[i]=n;}
-        else {break;}
+        if(fscanf(highsc, "%d", &n)!=EOF){
+        	highs[i]=n;
+        }
+        else {
+        	break;
+        }
     }while(i<highscores);
     while(highscores>i){highs[i]=0;i++;}
     i--;
