@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#define VIDE ' '
 
 int width=0, height=0, highscores=0;
 
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
         	board[i]=malloc(width*sizeof(char));
             for(j=0; j<width; j++)
             {
-                board[i][j]= '\0';
+                board[i][j]= VIDE;
             }
         }
         printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
@@ -388,12 +389,7 @@ void print(char **board)
         printf("\n|");
         for(j=0; j<width; j++)
         {
-        	if(board[i][j]=='X' || board[i][j]=='O'){
-            	printf(" %c |", board[i][j]);
-        	
-        	}else{
-        		printf("   |");
-        	}
+            printf(" %c |", board[i][j]);
         }
     }
     printf("\n+");
