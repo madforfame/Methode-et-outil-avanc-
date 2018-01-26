@@ -7,7 +7,7 @@
 #include <ctype.h>
 #define VIDE ' '
 
-
+extern int height, width;
 
 
 
