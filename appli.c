@@ -6,16 +6,12 @@
 int width=0, height=0, highscores=0;
 
 void print(char **board);
-int checknum(int num, char **board);
 void player(char **board, int num, char character);
-int checkfull(char **board);
 int horizontalScore(char **board, char character);
 int verticalScore(char **board, char character);
 int diagonal(char **board, char character);
 int diagonal1(char **board, char character);
 int rowNum(int num, char **board);
-int checkEmpty(char **board);
-int checkCol(int num, char **board);
 void undoRedo(char *x, char **board, int num, int *undoCol,
                int *undoRow, int *k, int *l, int *z,
                int *redoCol, int *redoRow, int *q);
@@ -24,8 +20,6 @@ int checkEmpty1(char **board,int num,int numOfrow);
 int Medium(char **board, char character, int *num);
 void Hard(char **board, int *num);
 void undoRedoLimit(int num, int *undoCounter, int *redoCounter);
-int numX(char **board);
-int numO(char **board);
 void XMLformating();
 void highscore(int high);
 void saveLoad(int *num, char **board);
