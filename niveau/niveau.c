@@ -1,4 +1,4 @@
-#include "Niveau.h"
+#include "niveau.h"
 
 int width=0, height=0, highscores=0;
 void Easy(char **board, int *num)
