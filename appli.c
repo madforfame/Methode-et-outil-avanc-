@@ -907,7 +907,7 @@ void highscore(int high)
 {
     int i=0, n=0, temp;
     int highs[highscores];
-    FILE *highsc = fopen("highscores.text", "r");
+    FILE *highsc = fopen("highscores.text", "w");
     if (highsc == NULL){
         perror("Le fichier de highscore highscores.text ne peut être ouvert ou n'existe pas \n");
     }
