@@ -1,13 +1,8 @@
-#ifndef CONS
-#define CONS 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../util.h"
 #include "../tableau/tableau.h"
-#define VIDE ' ' 
 
 
 void Easy(char **board, int *num);
 int Medium(char **board, char character, int *num);
 void Hard(char **board, int *num);
-#endif
+
