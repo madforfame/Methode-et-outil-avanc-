@@ -1,0 +1,13 @@
+#ifndef UTIL
+#define UTIL
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#define VIDE ' '
+
+extern int height, width, highscores;
+
+
+
+#endif
