@@ -82,10 +82,10 @@ int main(int argc, char *argv[])
                     saveLoad(&num, board);
                     num = checknum(num,board);
                     if(checkCol(num,board)){
-                        while(board[0][num-1]!=VIDE)
+                        while(board[0][num-1]!=VIDE && num!=-1 && num!=-2 && num!=-3 && num!=0) //CONDITION MODIFIÉE
                           {
                             print(board);
-                            printf("Invalid input. Do another move : ");
+                            printf("Invalid input number 1. Do another move : ");
                             scanf("%d", &num);
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
@@ -141,10 +141,10 @@ int main(int argc, char *argv[])
                     saveLoad(&num, board);
                     num = checknum(num,board);
                     if(checkCol(num,board)){
-                        while(board[0][num-1]!=VIDE)
+                        while(board[0][num-1]!=VIDE&& num!=-1 && num!=-2 && num!=-3 && num!=0)//CONDITION MODIFIEE 
                           {
                             print(board);
-                            printf("Invalid input. Do another move : ");
+                            printf("Invalid input number 2. Do another move : ");
                             scanf("%d", &num);
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
@@ -227,10 +227,10 @@ int main(int argc, char *argv[])
                 saveLoad(&num, board);
                 num = checknum(num,board);
                 if(checkCol(num,board)){
-                    while(board[0][num-1]!=VIDE && num!=-1 && num!=-2 && num!=-3)
+                    while(board[0][num-1]!=VIDE && num!=-1 && num!=-2 && num!=-3 && num!=0)
                       {
                         print(board);
-                        printf("Invalid input. Do another move : ");
+                        printf("Invalid input number 3. Do another move : ");
                         scanf("%d", &num);
                         saveLoad(&num, board);
                         if(num == 0 || num == -3){
@@ -504,6 +504,7 @@ void undoRedo(char *x, char **board, int num, int *undoCol,
         }
         if(num == 0){
             ccounter +=1;
+            board[undoRow[(*q-1)]][undoCol[(*q-1)]] = VIDE;
             board[undoRow[(*q-1)]][undoCol[(*q-1)]] = VIDE;
             print(board);
             *q-=1;
