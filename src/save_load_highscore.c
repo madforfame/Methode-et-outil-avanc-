@@ -5,8 +5,13 @@
 
 #include "save_load_highscore.h"
 
-void highscore(int high)
-{
+/**
+ * \fn highscore(int high)
+ * \brief Ecris le highscore dans le fichier de highscore si supérieur
+ *
+ * \param high valeur du score
+ */
+void highscore(int high){
     int i=0, n=0, temp;
     int highs[highscores];
     FILE *highsc = fopen("highscores.text", "w");
