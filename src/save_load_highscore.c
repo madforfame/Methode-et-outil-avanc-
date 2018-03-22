@@ -1,3 +1,8 @@
+/**
+* \file
+* \brief Méthodes permettant les sauvegardes et chargements de l'état du jeu ainsi que le traitement des highscores
+*/
+
 #include "save_load_highscore.h"
 
 void highscore(int high)
@@ -48,11 +53,21 @@ void highscore(int high)
         fclose(highsc);
     }
 }
+
+/**
+ * \fn saveLoad(int *num, char **board)
+ * \brief Sauvegarde ou charge un état de jeu selon l'entrée
+ *
+ * \param num entrée utilisateur, définis si on fait un save ou un load
+ * \param board le plateau de jeu
+ */
 void saveLoad(int *num, char **board){
     FILE *pfile;
     int r, t;
     if(*num == -2){
-        printf("Game Saved Successfully");
+    
+            printf("Game Saved Successfully");
+     
         pfile = fopen("save.txt", "w");
         for(r=height-1;r>=0;r--){
             for(t=width-1;t>=0;t--){
