@@ -1,8 +1,20 @@
+/**
+* \file
+* \brief Méthodes concernant le niveau de difficulté de l'ordinateur
+*/
+
 #include "niveau.h"
 
 int width=0, height=0, highscores=0;
-void Easy(char **board, int *num)
-{
+
+/**
+ * \fn void Easy(char **board, int *num)
+ * \brief Effectue un coup dans le jeu en difficulté Easy: coup aléatoire
+ *
+ * \param board le plateau de jeu
+ * \param num  A CONFIRMER
+ */
+void Easy(char **board, int *num){
     int i, j, flag, l;
     l = rand() % width;
     for(i=(height-1); i>=0; i--)
@@ -30,15 +42,26 @@ void Easy(char **board, int *num)
     *num = l+1;
 }
 
-int Medium(char **board, char character, int *num)
-{
+/**
+ * \fn int Medium(char **board, char character, int *num)
+ * \brief Joue un coup dans le jeu en difficulté Medium si possible
+ *
+ * \param board le plateau de jeu
+ * \param character caractère avec lequel il cherche à aligner un 4eme pion
+ * \param num  A CONFIRMER
+ * 
+ * \return 1 si coup joué, 0 sinon
+ * 
+ * Si peut aligner jouer à un endroit où 3 pions de même couleur sont alignés,
+ * le fait et renvoie 1, renvoie 0 sinon
+ */
+int Medium(char **board, char character, int *num){
     int i, j;
     for(i=height-1; i>=3; i--)
     {
         for(j=0; j<width; j++)
         {
-            if(board[i][j] == character && board[i-1][j] == character && board[i-2][j] == character && board[i-3][j]==VIDE)
-            {
+            if(board[i][j] == character && board[i-1][j] == character && board[i-2][j] == character && board[i-3][j]==VIDE){
                 board[i-3][j] = 'O';
                 *num = j+1;
                 return 1;
@@ -127,9 +150,17 @@ int Medium(char **board, char character, int *num)
 }
 
 
-
-void Hard(char **board, int *num)
-{
+/**
+ * \fn void Hard(char **board, int *num)
+ * \brief Joue un coup dans le jeu en difficulté Hard.
+ *
+ * \param board le plateau de jeu
+ * \param num  A CONFIRMER
+ * 
+ * Si possible joue un coup Medium, sinon Essaie d'aligner un pion avec deux autres pions de type O,
+ * et si impossible joue un coup en Easy.
+ */
+void Hard(char **board, int *num){
     int i, j;
     char x='X',o='O';
     if(Medium(board,x,num)==1){
