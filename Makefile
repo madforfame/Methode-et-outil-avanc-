@@ -1,8 +1,8 @@
 CC=gcc
-CFLAGS=-Wall -Iinclude -fprofile-arcs -ftest-coverage
+CFLAGS=-Wall -pg -Iinclude -fprofile-arcs -ftest-coverage
 
 EXEC=appli
-SRC = $(SRCDIR)/appli.c $(SRCDIR)/niveau.c $(SRCDIR)/save_load_highscore.c $(SRCDIR)/tableau.c 
+SRC = $(SRCDIR)/appli.c $(SRCDIR)/niveau.c $(SRCDIR)/save_load_highscore.c $(SRCDIR)/tableau.c $(SRCDIR)/redo.c $(SRCDIR)/player.c
 SRCDIR = src
 OBJS = $(SRC:.c=.o)
 
@@ -25,6 +25,7 @@ $(TEST) : $(TOBJS)
 clean: 
 	
 	rm -f $(EXEC) $(SRCDIR)/*.o
+	rm -f *.o
 	rm -f $(EXEC) $(SRCDIR)/*.gcno
 	rm -f $(EXEC) $(SRCDIR)/*.gdca
 
