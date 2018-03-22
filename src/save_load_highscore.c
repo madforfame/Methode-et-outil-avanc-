@@ -6,7 +6,7 @@
 #include "save_load_highscore.h"
 
 /**
- * \fn highscore(int high)
+ * \fn void highscore(int high)
  * \brief Ecris le highscore dans le fichier de highscore si supérieur
  *
  * \param high valeur du score
@@ -60,7 +60,7 @@ void highscore(int high){
 }
 
 /**
- * \fn saveLoad(int *num, char **board)
+ * \fn void saveLoad(int *num, char **board)
  * \brief Sauvegarde ou charge un état de jeu selon l'entrée
  *
  * \param num entrée utilisateur, définis si on fait un save ou un load
