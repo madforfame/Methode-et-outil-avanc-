@@ -1,0 +1,68 @@
+#include "redo.h"
+
+void undoRedoLimit(int num, int *undoCounter, int *redoCounter){
+    if(num == 0){
+        *undoCounter += 1;
+    }
+    else if(num == -3){
+        *redoCounter += 1;
+    }
+    else{
+        *undoCounter = 0;
+        *redoCounter = 0;
+    }
+}
+
+
+void undoRedo(char *x, char **board, int num, int *undoCol,
+               int *undoRow, int *k, int *l, int *z,
+               int *redoCol, int *redoRow, int *q, int width){
+        static int ccounter = 0, dcounter = 0;
+        if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
+            undoCol[*q] = num-1;
+            *k = rowNum(num, board);
+            undoRow[*q] = *k;
+        }
+        if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
+            redoCol[*z] = num-1;
+            *l = rowNum(num, board);
+            redoRow[*z] = *l;
+            *z+=1;
+        }
+        if(num == 0){
+            ccounter +=1;
+            board[undoRow[(*q-1)]][undoCol[(*q-1)]] = VIDE;
+            board[undoRow[(*q-1)]][undoCol[(*q-1)]] = VIDE;
+            print(board);
+            *q-=1;
+            *z-=1;
+        }
+        else if(num == -3){
+            dcounter += 1;
+            if((dcounter <= ccounter)){
+                board[redoRow[*z]][redoCol[*z]] = *x;
+                print(board);
+                *q+=1;
+                undoCol[*q] = redoCol[*z+1];
+                undoRow[*q] = redoRow[*z+1];
+                *z+=1;
+            }
+        }
+        else if(num == -1){
+ 
+            printf("Game Loaded Successfully");
+     
+        }
+        else if(num == -2){
+  
+            printf("Game saved Successfully");
+            print(board);
+  
+        }
+        else{
+            *q+=1;
+            player(board,num,*x);
+            ccounter = 0;
+            dcounter = 0;
+        }
+}
