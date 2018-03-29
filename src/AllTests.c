@@ -1,5 +1,5 @@
 #include "CuTest.h"
-#include "StrUtil.h"
+#include "checkUtil.h"
     
     CuSuite* StrUtilGetSuite();
     

@@ -290,6 +290,13 @@ int verticalScore(char **board, char character){
     return score1;
 }
 
+/**
+ * \fn void afficherScores(int score1, int score2)
+ * \brief Affiche les scores des deux joueurs
+ *
+ * \param score1 score du joueur 1
+ * \param score2 score du joueur 2
+ */
 void afficherScores(int score1, int score2){
 	 printf("\n***************************************************");
 	printf("\n***************************************************");
