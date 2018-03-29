@@ -1,4 +1,20 @@
+/**
+ * \file 
+ * \brief methodes de undo redo
+ */
+
+
+
 #include "redo.h"
+
+/**
+ * \fn void undoRedoLimit(int num, int *undoCounter, int *redoCounter)
+ * \brief vérification de pouvoir faire un redo 
+ * \param num :  0 pour le undo , -3 pour le redo
+ * \param undocounter : nombre de undo réalisé 
+ * \param redoCounter : nombre de redo réalisé 
+ * 
+ */
 
 void undoRedoLimit(int num, int *undoCounter, int *redoCounter){
     if(num == 0){
@@ -13,21 +29,71 @@ void undoRedoLimit(int num, int *undoCounter, int *redoCounter){
     }
 }
 
+/**
+ * \fn void undoRedo(char *x, char **board, int num, int *undoCol,
+               int *undoRow, int *k, int *l, int *z,
+               int *redoCol, int *redoRow, int *q, int width)
+
+ * \brief manipulation des undo redo
+ * \param x : le charactere à inserer
+ * \param board : le plateau de jeu
+ * \param num : entree de joueur
+ * \param undoCol : tableau indiquant les colonnes des jetons insérés depuis le debut de la partie 
+ * \param undoRow : tableau indiqaunt les lignes des jetons insérés depuis le debut de la partie
+ * \param k : pointeur sur la variable contenant le nombre de cases restantes dans la dernière colonne jouée
+ * \param q : pointeur sur l'indice des  tableaux undoCol undoRow
+ * \param l : nombre de cases vides de la colonne num dans board
+ * \param z : pointeur sur l'indice des  tableaux RedoCol redoRow
+ * \param redoCol : tableau indiquant les colonnes des jetons insérés depuis le debut de la partie 
+ * \param redoRow : tableau indiqaunt les lignes des jetons insérés depuis le debut de la partie
+ * \param width : la largeur du plateau de jeu
+ * 
+ * 
+ */
 
 void undoRedo(char *x, char **board, int num, int *undoCol,
                int *undoRow, int *k, int *l, int *z,
                int *redoCol, int *redoRow, int *q, int width){
         static int ccounter = 0, dcounter = 0;
+        int yolo;
         if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
             undoCol[*q] = num-1;
+           
             *k = rowNum(num, board);
             undoRow[*q] = *k;
+           
         }
+        printf("undo   \n");
+        for(yolo=0;yolo<height*width; yolo++){
+            printf("%i  " ,undoRow[yolo]);
+
+        }
+        printf("\n\n");
+        for(yolo=0;yolo<width*height; yolo++){
+            printf("%i  " ,undoCol[yolo]);
+
+        }
+
+        printf("\n\n redo \n");
+         for(yolo=0;yolo<height*width; yolo++){
+            printf("%i  " ,redoRow[yolo]);
+
+        }
+        printf("\n\n");
+        for(yolo=0;yolo<width*height; yolo++){
+            printf("%i  " ,redoCol[yolo]);
+
+        }
+
+
         if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
             redoCol[*z] = num-1;
             *l = rowNum(num, board);
+            printf("\n \n z========================>%i\n",*z);
             redoRow[*z] = *l;
             *z+=1;
+                
+         
         }
         if(num == 0){
             ccounter +=1;
