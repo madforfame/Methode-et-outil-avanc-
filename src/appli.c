@@ -29,12 +29,12 @@ int main(int argc, char *argv[]){
             *redoCol, *redoRow, l, *compUndoRow;
         static int q=0, z=0, d=0, c=0;
         char **board, x='X', o='O';
-	undoCol = (int *)malloc(height*width*sizeof(int));
-    redoCol = (int *)malloc(height*width*sizeof(int));
-	undoRow = (int *)malloc(height*width*sizeof(int));
-	redoRow = (int *)malloc(height*width*sizeof(int));
-	compUndoCol = (int *)malloc(height*width*sizeof(int));
-	compUndoRow = (int *)malloc(height*width*sizeof(int));
+		undoCol = (int *)malloc(height*width*sizeof(int));
+		redoCol = (int *)malloc(height*width*sizeof(int));
+		undoRow = (int *)malloc(height*width*sizeof(int));
+		redoRow = (int *)malloc(height*width*sizeof(int));
+		compUndoCol = (int *)malloc(height*width*sizeof(int));
+		compUndoRow = (int *)malloc(height*width*sizeof(int));
         for(i=0;i<height*width;i++){
             undoCol[i] = 0;
             redoCol[i] = 0;
@@ -52,16 +52,14 @@ int main(int argc, char *argv[]){
                 board[i][j]= VIDE;
             }
         }
-            printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
-            printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
-            scanf("%d", &choose);
-        while((choose!=1 && choose!=2) || isalpha(choose))
-        {
+		printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
+		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
+		choose = checkentier(choose);
+        while((choose!=1 && choose!=2) || isalpha(choose)){
        
             printf("Enter 1 or 2\n");
 	        printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
-            scanf("%d", &choose);
-       
+            choose = checkentier(choose);
            
         }
         if(choose == 1){
@@ -73,18 +71,19 @@ int main(int argc, char *argv[]){
             
                 if(numX(board) <= numO(board)){
                     
-                        printf("\nplayer 1 enter number of the column:");
-                        scanf("%d", &num);
+					printf("\nplayer 1 enter number of the column:");
+                    num = checkentier(num);
+                    num = checknum(num,board,width);
                   
                     saveLoad(&num, board);
-                    num = checknum(num,board,width);
                     if(checkCol(num,board)){
                         while(num>0 && board[0][num-1]!=VIDE) //CONDITION MODIFIÉE
                           {
                             print(board);
                             
-                                printf("Invalid input number 1. Do another move : ");
-                                scanf("%d", &num);
+                                printf("Invalid input player 1. Do another move : ");
+                                num = checkentier(num);
+								num = checknum(num,board,width);
                             
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
@@ -95,8 +94,9 @@ int main(int argc, char *argv[]){
                     if(redoCounter >= undoCounter){
                         while(num == -3){
                             print(board);
-                                printf("\ncannot redo!! play again");
-                                scanf("%d", &num);
+							printf("\ncannot redo!! play again");
+							num = checkentier(num);
+							num = checknum(num,board,width);
                             saveLoad(&num, board);
                             if(num == 0){
                                 break;
@@ -105,8 +105,9 @@ int main(int argc, char *argv[]){
                     }
                     while(num == 0 && checkEmpty(board)){
                         print(board);
-                            printf("\ncannot undo! play again");
-                            scanf("%d", &num);
+                            printf("\ncannot undo! play again\n");
+                            num = checkentier(num);
+                            num = checknum(num,board,width);
                     
                         saveLoad(&num, board);
                         if(num == -3){
@@ -114,7 +115,8 @@ int main(int argc, char *argv[]){
                                 while(num == -3){
                                     print(board);
                                         printf("\ncannot redo!! play again");
-                                        scanf("%d", &num);
+                                        num = checkentier(num);
+                                        num = checknum(num,board,width);
                                  
                                     if(num == 0){
                                         break;
@@ -138,17 +140,18 @@ int main(int argc, char *argv[]){
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
       
                 if(numO(board) < numX(board)){
-                        printf("\nplayer 2 enter number of the column:");
-                        scanf("%d", &num);
+					printf("\nplayer 2 enter number of the column:");
+					num = checkentier(num);
+					num = checknum(num,board,width);
             
                     saveLoad(&num, board);
-                    num = checknum(num,board,width);
                     if(checkCol(num,board)){
                         while(num > 0 && board[0][num-1]!=VIDE)//CONDITION MODIFIEE 
                           {
                             print(board);
-                                printf("Invalid input number 2. Do another move : ");
-                                scanf("%d", &num);
+                                printf("Invalid input player 2. Do another move : ");
+                                num = checkentier(num);
+								num = checknum(num,board,width);
                         
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
@@ -160,7 +163,8 @@ int main(int argc, char *argv[]){
                         while(num == -3){
                             print(board);
                                 printf("\ncannot redo!! play again");
-                                scanf("%d", &num);
+                                num = checkentier(num);
+                                num = checknum(num,board,width);
                     
                             saveLoad(&num, board);
                             if(num == 0){
@@ -171,7 +175,8 @@ int main(int argc, char *argv[]){
                     while(num == 0 && checkEmpty(board)){
                         print(board);
                             printf("\ncannot undo! play again");
-                            scanf("%d", &num);
+                            num = checkentier(num);
+                            num = checknum(num,board,width);
                    
                         saveLoad(&num, board);
                         if(num == -3){
@@ -179,7 +184,8 @@ int main(int argc, char *argv[]){
                                 while(num == -3){
                                     print(board);
                                         printf("\ncannot redo!! play again");
-                                        scanf("%d", &num);
+                                        num = checkentier(num);
+                                        num = checknum(num,board,width);
                                  
                                     saveLoad(&num, board);
                                     if(num == 0){
@@ -218,34 +224,33 @@ int main(int argc, char *argv[]){
                 printf("\nPLAYER 1 WINS");
             }
         }
-        else
-        {
-    
+        else{
+
                 printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
-                scanf("%d", &choose);
+                choose = checkentier(choose);
          
-            while(choose!=1 && choose!=2 && choose!=3)
-            {
-                    printf("Enter 1 , 2 or 3\n");
-                    printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
-                    scanf("%d", &choose);
+            while(choose!=1 && choose!=2 && choose!=3){
+				printf("Enter 1 , 2 or 3\n");
+				printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
+				choose = checkentier(choose);
             
             }
             print(board);
             do{
-                    printf("\nif you want to undo, press 0\n");
-                    printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
-                    printf("\nenter number of the column:");
-                    scanf("%d", &num);
+				printf("\nif you want to undo, press 0\n");
+				printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
+				printf("\nenter number of the column:");
+				num = checkentier(num);
+				num = checknum(num,board,width);
              
                 saveLoad(&num, board);
-                num = checknum(num,board,width);
                 if(checkCol(num,board)){
                     while(num>0 && board[0][num-1]!=VIDE)
                       {
                         print(board);
                             printf("Invalid input number 3. Do another move : ");
-                            scanf("%d", &num);
+                            num = checkentier(num);
+                            num = checknum(num,board,width);
                      
                         saveLoad(&num, board);
                         if(num == 0 || num == -3){
@@ -257,7 +262,8 @@ int main(int argc, char *argv[]){
                     while(num == -3){
                         print(board);
                             printf("\ncannot redo!! play again");
-                            scanf("%d", &num);
+                            num = checkentier(num);
+                            num = checknum(num,board,width);
                  
                         saveLoad(&num, board);
                         if(num == 0){
@@ -268,14 +274,16 @@ int main(int argc, char *argv[]){
                 while(num == 0 && checkEmpty(board)){
                     print(board);
                         printf("\ncannot undo! play again");
-                        scanf("%d", &num);
+                        num = checkentier(num);
+                        num = checknum(num,board,width);
                     saveLoad(&num, board);
                     if(num == -3){
                         if(redoCounter >= compUndoCounter){
                             while(num == -3){
                                 print(board);
                                 printf("\ncannot redo!! play again");
-                                scanf("%d", &num);
+                                num = checkentier(num);
+                                num = checknum(num,board,width);
                              
                                 saveLoad(&num, board);
                                 if(num == 0){
