@@ -43,15 +43,26 @@ int main(int argc, char *argv[]){
             compUndoCol[i] = 0;
             compUndoRow[i] = 0;
         }
-	board = (char **)malloc(height*sizeof(char *));
-        for(i=0; i<height; i++)
-        {
-        	board[i]=malloc(width*sizeof(char));
-            for(j=0; j<width; j++)
-            {
-                board[i][j]= VIDE;
-            }
-        }
+        
+        playAgain = 'n';
+        
+        if(playAgain != 'y'){
+			board = (char **)malloc(height*sizeof(char *));
+			for(i=0; i<height; i++){
+				board[i]=malloc(width*sizeof(char));
+				for(j=0; j<width; j++)
+				{
+					board[i][j]= VIDE;
+				}
+			}
+		}
+		else{
+			for(i=0; i<height; i++){
+				for(j=0; j<width; j++){
+					board[i][j]= VIDE;
+				}
+			}
+		}
 		printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
 		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
 		choose = checkentier(choose);
@@ -128,13 +139,8 @@ int main(int argc, char *argv[]){
                     undoRedoLimit(num,&undoCounter,&redoCounter);
                     undoRedo(&x,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
                     score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
-                    printf("\n***************************************************");
-                    printf("\n***************************************************");
-                    printf("\n**                      **                       **");
-                    printf("\n** player1 score : %d    **   player2 score  : %d  **", score1, score2);
-                    printf("\n**                      **                       **");
-                    printf("\n***************************************************");
-                    printf("\n***************************************************");
+                    
+                    afficherScores(score1,score2);
                 }
 	        printf("\nif you want to undo, press 0\n");
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
@@ -198,14 +204,8 @@ int main(int argc, char *argv[]){
                     undoRedoLimit(num,&undoCounter,&redoCounter);
                     undoRedo(&o,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
                     score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
-
-                    printf("\n***************************************************");
-                    printf("\n***************************************************");
-                    printf("\n**                      **                       **");
-                    printf("\n** player1 score : %d    **   player2 score  : %d  **", score1, score2);
-                    printf("\n**                      **                       **");
-                    printf("\n***************************************************");
-                    printf("\n***************************************************");
+                    
+					afficherScores(score1,score2);
 
                 }
             }while(checkfull(board));
@@ -297,13 +297,7 @@ int main(int argc, char *argv[]){
                 undoRedo(&x,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
                 score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
              
-                printf("\n***************************************************");
-                printf("\n***************************************************");
-                printf("\n**                      **                       **");
-                printf("\n**   User  score : %d    **  Computer score  : %d  **", score1, score2);
-                printf("\n**                      **                       **");
-                printf("\n***************************************************");
-                printf("\n***************************************************");
+                afficherScores(score1,score2);
              
                 switch(choose)
                 {
@@ -362,13 +356,7 @@ int main(int argc, char *argv[]){
                 print(board);
                 score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
                
-                printf("\n***************************************************");
-                printf("\n***************************************************");
-                printf("\n**                      **                       **");
-                printf("\n**   User  score : %d    **  Computer score  : %d  **", score1, score2);
-                printf("\n**                      **                       **");
-                printf("\n***************************************************");
-                printf("\n***************************************************");
+                afficherScores(score1,score2);
               
             }while(checkfull(board));
             if(score2>score1){

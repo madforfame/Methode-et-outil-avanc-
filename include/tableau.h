@@ -17,5 +17,6 @@ int diagonal(char **board, char character);
 int diagonal1(char **board, char character);
 int horizontalScore(char **board, char character);
 int verticalScore(char **board, char character);
+void afficherScores(int score1, int score2);
 
 #endif

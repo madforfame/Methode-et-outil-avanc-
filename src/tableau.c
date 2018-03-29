@@ -285,3 +285,13 @@ int verticalScore(char **board, char character){
     }
     return score1;
 }
+
+void afficherScores(int score1, int score2){
+	 printf("\n***************************************************");
+	printf("\n***************************************************");
+	printf("\n**                      **                       **");
+	printf("\n** player1 score : %d    **   player2 score  : %d  **", score1, score2);
+	printf("\n**                      **                       **");
+	printf("\n***************************************************");
+	printf("\n***************************************************");
+}
