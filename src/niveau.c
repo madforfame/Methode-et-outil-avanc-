@@ -12,7 +12,7 @@ int width=0, height=0, highscores=0;
  * \brief Effectue un coup dans le jeu en difficulté Easy: coup aléatoire
  *
  * \param board le plateau de jeu
- * \param num  A CONFIRMER
+ * \param num  : colonne choisie pour jouer 
  */
 void Easy(char **board, int *num){
     int i, j, flag, l;
@@ -48,7 +48,7 @@ void Easy(char **board, int *num){
  *
  * \param board le plateau de jeu
  * \param character caractère avec lequel il cherche à aligner un 4eme pion
- * \param num  A CONFIRMER
+ * \param num : colonne choisie pour jouer 
  * 
  * \return 1 si coup joué, 0 sinon
  * 
@@ -155,7 +155,7 @@ int Medium(char **board, char character, int *num){
  * \brief Joue un coup dans le jeu en difficulté Hard.
  *
  * \param board le plateau de jeu
- * \param num  A CONFIRMER
+ * \param num :colonne choisie pour jouer 
  * 
  * Si possible joue un coup Medium, sinon Essaie d'aligner un pion avec deux autres pions de type O,
  * et si impossible joue un coup en Easy.
