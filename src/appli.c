@@ -8,6 +8,7 @@
 #include "redo.h"
 #include "save_load_highscore.h"
 #include "player.h"
+#include "check.c"
 
 void XMLformating();
 
