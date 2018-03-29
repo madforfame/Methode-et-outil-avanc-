@@ -134,7 +134,7 @@ int checkfull(char **board){
 
 /**
  * \fn int rowNum(int num, char **board)
- * \brief Compte le nombre de cases vides d'une colonne ???
+ * \brief Compte le nombre de cases vides d'une colonne 
  *
  * \param num le numéro de la colonne
  * \param board le plateau de jeu
@@ -192,7 +192,7 @@ void print(char **board){
 
 /**
  * \fn int diagonal(char **board, char character)
- * \brief Compte le nombre de points en diagonale pour le caractère donné (diagonale de gauche à droite ?)
+ * \brief Compte le nombre de points en diagonale droite pour le caractère donné 
  *
  * \param board le plateau de jeu
  * \param character le caractère à vérifier
@@ -216,7 +216,7 @@ int diagonal(char **board, char character){
 
 /**
  * \fn int diagonal1(char **board, char character)
- * \brief Compte le nombre de points en diagonale pour le caractère donné (diagonale de droite à gauche ?)
+ * \brief Compte le nombre de points en diagonale  gauche pour le caractère donné 
  *
  * \param board le plateau de jeu
  * \param character le caractère à vérifier
