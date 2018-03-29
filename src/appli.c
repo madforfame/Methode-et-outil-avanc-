@@ -74,33 +74,43 @@ int main(int argc, char *argv[]){
            
         }
         if(choose == 1){
+			int player=1;
             print(board);
             do{
                 
 	        printf("\nif you want to undo, press 0\n");
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
             
-                if(numX(board) <= numO(board)){
+                if((numX(board) <= numO(board) && player==1) || (numO(board) < numX(board) && player==2)){
                     
-					printf("\nplayer 1 enter number of the column:");
+                    if(player==1){
+						printf("\nplayer 1 enter number of the column:");
+					}
+					else{
+						printf("\nplayer 2 enter number of the column:");
+					}
                     num = checkentier(num);
                     num = checknum(num,board,width);
                   
                     saveLoad(&num, board);
                     if(checkCol(num,board)){
-                        while(num>0 && board[0][num-1]!=VIDE) //CONDITION MODIFIÉE
-                          {
+                        while(num>0 && board[0][num-1]!=VIDE){
                             print(board);
                             
-                                printf("Invalid input player 1. Do another move : ");
-                                num = checkentier(num);
-								num = checknum(num,board,width);
+                            if(player==1){
+								printf("Invalid input player 1. Do another move : ");
+							}
+							else{
+								printf("Invalid input player 2. Do another move : ");
+							}
+							num = checkentier(num);
+							num = checknum(num,board,width);
                             
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
                                 break;
                             }
-                          }
+						}
                     }
                     if(redoCounter >= undoCounter){
                         while(num == -3){
@@ -137,76 +147,17 @@ int main(int argc, char *argv[]){
                         }
                     }
                     undoRedoLimit(num,&undoCounter,&redoCounter);
-                    undoRedo(&x,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
-                    score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
+                    if(player==1){
+						undoRedo(&x,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
+						score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
+						player=2;
+                    }else{
+						undoRedo(&o,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
+						score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
+						player=1;
+					}
                     
                     afficherScores(score1,score2);
-                }
-	        printf("\nif you want to undo, press 0\n");
-	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
-      
-                if(numO(board) < numX(board)){
-					printf("\nplayer 2 enter number of the column:");
-					num = checkentier(num);
-					num = checknum(num,board,width);
-            
-                    saveLoad(&num, board);
-                    if(checkCol(num,board)){
-                        while(num > 0 && board[0][num-1]!=VIDE)//CONDITION MODIFIEE 
-                          {
-                            print(board);
-                                printf("Invalid input player 2. Do another move : ");
-                                num = checkentier(num);
-								num = checknum(num,board,width);
-                        
-                            saveLoad(&num, board);
-                            if(num == 0 || num == -3){
-                                break;
-                            }
-                          }
-                    }
-                    if(redoCounter >= undoCounter){
-                        while(num == -3){
-                            print(board);
-                                printf("\ncannot redo!! play again");
-                                num = checkentier(num);
-                                num = checknum(num,board,width);
-                    
-                            saveLoad(&num, board);
-                            if(num == 0){
-                                break;
-                            }
-                        }
-                    }
-                    while(num == 0 && checkEmpty(board)){
-                        print(board);
-                            printf("\ncannot undo! play again");
-                            num = checkentier(num);
-                            num = checknum(num,board,width);
-                   
-                        saveLoad(&num, board);
-                        if(num == -3){
-                            if(redoCounter >= undoCounter){
-                                while(num == -3){
-                                    print(board);
-                                        printf("\ncannot redo!! play again");
-                                        num = checkentier(num);
-                                        num = checknum(num,board,width);
-                                 
-                                    saveLoad(&num, board);
-                                    if(num == 0){
-                                    	break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    undoRedoLimit(num,&undoCounter,&redoCounter);
-                    undoRedo(&o,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
-                    score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
-                    
-					afficherScores(score1,score2);
-
                 }
             }while(checkfull(board));
 
