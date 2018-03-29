@@ -47,7 +47,11 @@ int numO(char **board){
 
 /**
  * \fn int checkEmpty1(char **board,int num,int numOfrow)
- * \brief ???
+ * \brief Verifie si une case est valide
+ * \param board : le plateau de jeu 
+ * \param num : numero de la colonne choisie
+ * \pram numOfrow : numero de ligne du sommet de la colonne num
+ * \return 1 si la case est valide , 0 sinon 
  */
 int checkEmpty1(char **board,int num,int numOfrow){
     if(numOfrow==(height-1) && board[numOfrow][num]==VIDE){
