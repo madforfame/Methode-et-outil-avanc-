@@ -12,30 +12,30 @@
  * \param high valeur du score
  */
 void highscore(int high){
-    int i=0, n=0, temp;
+    int i=0, n=0, temp, ret;
     int highs[highscores];
-    FILE *highsc = fopen("highscores.text", "w");
+    FILE *highsc = fopen("highscores.text", "r+");
     if (highsc == NULL){
         perror("Le fichier de highscore highscores.text ne peut être ouvert ou n'existe pas \n");
     }
     else{
-        fscanf(highsc, "%d", &highs[i]);
-        do
-        {
-           i++;
-            if(fscanf(highsc, "%d", &n)!=EOF){
+        while(i<highscores){
+            if((ret = fscanf(highsc, "%d", &n))!=EOF && ret!=0 ){
                 highs[i]=n;
+                i++;
             }
             else {
         	   break;
             }
-        }while(i<highscores);
+        }
 
         while(highscores>i){
     	   highs[i]=0;
     	   i++;
         }
+        
         i--;
+        
         if(high>highs[i])
         {
             highs[i] = high;
