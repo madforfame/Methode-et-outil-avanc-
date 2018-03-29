@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -pg -Iinclude -fprofile-arcs -ftest-coverage
 
 EXEC=appli
-SRC = $(SRCDIR)/appli.c $(SRCDIR)/niveau.c $(SRCDIR)/save_load_highscore.c $(SRCDIR)/tableau.c $(SRCDIR)/redo.c $(SRCDIR)/player.c
+SRC = $(SRCDIR)/appli.c $(SRCDIR)/niveau.c $(SRCDIR)/save_load_highscore.c $(SRCDIR)/tableau.c $(SRCDIR)/redo.c $(SRCDIR)/player.c $(SRCDIR)/check.c
 SRCDIR = src
 OBJS = $(SRC:.c=.o)
 
