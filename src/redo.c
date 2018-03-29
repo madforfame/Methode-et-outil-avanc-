@@ -55,7 +55,6 @@ void undoRedo(char *x, char **board, int num, int *undoCol,
                int *undoRow, int *k, int *l, int *z,
                int *redoCol, int *redoRow, int *q, int width){
         static int ccounter = 0, dcounter = 0;
-        int yolo;
         if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
             undoCol[*q] = num-1;
            
@@ -63,33 +62,11 @@ void undoRedo(char *x, char **board, int num, int *undoCol,
             undoRow[*q] = *k;
            
         }
-        printf("undo   \n");
-        for(yolo=0;yolo<height*width; yolo++){
-            printf("%i  " ,undoRow[yolo]);
-
-        }
-        printf("\n\n");
-        for(yolo=0;yolo<width*height; yolo++){
-            printf("%i  " ,undoCol[yolo]);
-
-        }
-
-        printf("\n\n redo \n");
-         for(yolo=0;yolo<height*width; yolo++){
-            printf("%i  " ,redoRow[yolo]);
-
-        }
-        printf("\n\n");
-        for(yolo=0;yolo<width*height; yolo++){
-            printf("%i  " ,redoCol[yolo]);
-
-        }
-
+        
 
         if(num != 0 && !checkCol(num, board) && num != -3 && !(num<-3) && !(num>width) && !(num == -2)){
             redoCol[*z] = num-1;
             *l = rowNum(num, board);
-            printf("\n \n z========================>%i\n",*z);
             redoRow[*z] = *l;
             *z+=1;
                 
