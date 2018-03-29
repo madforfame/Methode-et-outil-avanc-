@@ -1,7 +1,7 @@
 
 /**
- *\ file 
- *\ methodes de vérification d'entrées 
+ * \file 
+ * \brief methodes de vérification d'entrées 
  */
 
 #include "check.h"
