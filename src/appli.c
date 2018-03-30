@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
 	        printf("\nif you want to undo, press 0\n");
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
             
-                if((player==1) ||  player==2)){
+                if((player==1) ||  (player==2)){
                     
                     if(player==1){
 						printf("\nplayer 1 enter number of the column:");
