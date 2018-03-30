@@ -21,11 +21,23 @@ $(EXEC): $(OBJS)
 
 $(TEST) : $(TOBJS)
 	$(CC) $(CFLAGS) $(TOBJS) -o $(TEST)
+	./AllTests
+
+gprof:
+	make 
+	gprof appli gmon.out >res_gprof.txt
+	cat res_gprof.txt
+
+cov:
+	lcov --base-directory ./src/ --directory ./src/ -c -o rap.info
+	genhtml rap.info --output-directory out
+
+
 
 clean: 
 	
 	rm -f $(EXEC) $(SRCDIR)/*.o
 	rm -f *.o
 	rm -f $(EXEC) $(SRCDIR)/*.gcno
-	rm -f $(EXEC) $(SRCDIR)/*.gdca
+	rm -f $(EXEC) $(SRCDIR)/*.gcda
 
