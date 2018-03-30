@@ -7,7 +7,7 @@ SRCDIR = src
 OBJS = $(SRC:.c=.o)
 
 TEST=AllTests
-TSRC= $(SRCDIR)/AllTests.c $(SRCDIR)/CuTest.c $(SRCDIR)/StrUtil.c
+TSRC= $(SRCDIR)/AllTests.c $(SRCDIR)/CuTest.c $(SRCDIR)/checkUtil.c
 TOBJS= $(TSRC:.c=.o)
 
 all: $(EXEC)
