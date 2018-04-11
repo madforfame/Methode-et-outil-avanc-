@@ -10,13 +10,16 @@
  * \brief Ecris le highscore dans le fichier de highscore si supérieur
  *
  * \param high valeur du score
+ * \param print si vaut 1 alors le highscore est affiché
  */
-void highscore(int high){
+void highscore(int high, int print){
     int i=0, n=0, temp, ret;
     int highs[highscores];
     FILE *highsc = fopen("highscores.text", "r+");
     if (highsc == NULL){
-        perror("Le fichier de highscore highscores.text ne peut être ouvert ou n'existe pas \n");
+		if(print){
+			perror("Le fichier de highscore highscores.text ne peut être ouvert ou n'existe pas \n");
+		}
     }
     else{
         while(i<highscores){
@@ -48,13 +51,19 @@ void highscore(int high){
             i--;
         }
         highsc = fopen("highscores.text", "w");
-        printf("\n\t      High Scores\n\t\t*****");
+        if(print){
+			printf("\n\t      High Scores\n\t\t*****");
+		}
         for(i=0; i<highscores; i++)
         {
             fprintf(highsc,"%d ", highs[i]);
-            printf("\n\t\t* %d *", highs[i]);
+            if(print){
+				printf("\n\t\t* %d *", highs[i]);
+			}
         }
-        printf("\n\t\t*****");
+        if(print){
+			printf("\n\t\t*****");
+		}
         fclose(highsc);
     }
 }

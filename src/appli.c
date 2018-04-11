@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     char playAgain;
     do{
         int flag, score1=0, score2=0, *compUndoCol, undoCounter=0,
-            redoCounter=0, compUndoCounter =0, choose;
+            redoCounter=0, compUndoCounter =0, choose, mem=0;
         int i, j, num=0, *undoCol, k, *undoRow,
             *redoCol, *redoRow, l, *compUndoRow;
         static int q=0, z=0, d=0, c=0;
@@ -65,12 +65,12 @@ int main(int argc, char *argv[]){
 			}
 		}
 		printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
-		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
+		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\nComputer vs Computer (1000 fois sans affichage): press 3 \n");
 		choose = checkentier(choose);
-        while((choose!=1 && choose!=2) || isalpha(choose)){
+        while((choose!=1 && choose!=2 && choose!=3) || isalpha(choose)){
        
-            printf("Enter 1 or 2\n");
-	        printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\n");
+            printf("Enter 1 or 2 or 3\n");
+	        printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\nComputer vs Computer (1000 fois sans affichage): press 3 \n");
             choose = checkentier(choose);
            
         }
@@ -176,7 +176,7 @@ int main(int argc, char *argv[]){
                 printf("\nPLAYER 1 WINS");
             }
         }
-        else{
+        else if(choose==2){
 
                 printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
                 choose = checkentier(choose);
@@ -255,7 +255,7 @@ int main(int argc, char *argv[]){
                 {
                     case 1:{
                         if(num != 0 && num != -1 && num != -2){
-                            Easy(board, &num);
+                            Easy(board, &num,'O');
                             compUndoCol[d++] = num-1 ;
                             compUndoRow[c++] = rowNum(num,board)+1;
                             compUndoCounter = 0;
@@ -271,11 +271,11 @@ int main(int argc, char *argv[]){
                     case 2: {
                         if(num != 0 && num != -1 && num != -2){
                             flag=0;
-                            if(Medium(board,x,&num)==1){
+                            if(Medium(board,x,&num,'O')==1){
                             	flag=1;
                             }
                             if(flag!=1){
-                            	Easy(board, &num);
+                            	Easy(board, &num,'O');
                             }
                             compUndoCol[d++] = num-1 ;
                             compUndoRow[c++] = rowNum(num,board)+1;
@@ -291,7 +291,7 @@ int main(int argc, char *argv[]){
                     }
                     case 3:{
                         if(num != 0 && num != -1 && num != -2){
-                            Hard(board,&num);
+                            Hard(board,&num,'O');
                             compUndoCol[d++] = num-1 ;
                             compUndoRow[c++] = rowNum(num,board)+1;
                             compUndoCounter = 0;
@@ -328,7 +328,150 @@ int main(int argc, char *argv[]){
                 printf("\nUser WINS\n");
             }
         }
-        highscore(high);
+        else{
+			mem=1;
+			for(int i=0;i<1000;i++){
+				
+				q=0; z=0; d=0; c=0;
+				for(j=0; j<height; j++){
+					for(k=0; k<width; k++){
+						board[j][k]= VIDE;
+					}
+				}
+				
+				choose=1;
+				do{
+					num=1;
+					switch(choose){
+						case 1:{
+							if(num != 0 && num != -1 && num != -2){
+								Easy(board, &num,'X');
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+						case 2: {
+							if(num != 0 && num != -1 && num != -2){
+								flag=0;
+								if(Medium(board,x,&num,'X')==1){
+									flag=1;
+								}
+								if(flag!=1){
+									Easy(board, &num,'X');
+								}
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+						case 3:{
+							if(num != 0 && num != -1 && num != -2){
+								Hard(board,&num,'X');
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+					}
+					 
+					score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
+				 
+					switch(choose){
+						case 1:{
+							if(num != 0 && num != -1 && num != -2){
+								Easy(board, &num,'O');
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+						case 2: {
+							if(num != 0 && num != -1 && num != -2){
+								flag=0;
+								if(Medium(board,x,&num,'O')==1){
+									flag=1;
+								}
+								if(flag!=1){
+									Easy(board, &num,'O');
+								}
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+						case 3:{
+							if(num != 0 && num != -1 && num != -2){
+								Hard(board,&num,'O');
+								compUndoCol[d++] = num-1 ;
+								compUndoRow[c++] = rowNum(num,board)+1;
+								compUndoCounter = 0;
+							}
+							if(num == 0){
+								compUndoCounter += 1;
+								c--;
+								d--;
+								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
+							}
+							break;
+						}
+					}
+					score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
+				  
+				}while(checkfull(board));
+				if(score2>score1){
+					high=score2;
+				   
+				}
+				else if(score1==score2){
+					high=score1;
+		 
+				}
+				else{
+					high=score1;
+				}
+				highscore(high,0);
+			}
+		}
+		if(mem==1){
+			exit(0);
+		}
+        highscore(high,1);
    
         printf("\nif you you want to play again press y, else press any key\n");
         scanf("\n%c",&playAgain);
