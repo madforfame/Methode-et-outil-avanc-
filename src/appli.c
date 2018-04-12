@@ -21,6 +21,10 @@ void XMLformating();
  */
 int main(int argc, char *argv[]){
     int high=0;
+	if(argc<2){
+		perror("ERREUR D'ARGUMENT");
+		exit(0);
+	}
     XMLformating(argv[1]);
     char playAgain;
     do{
