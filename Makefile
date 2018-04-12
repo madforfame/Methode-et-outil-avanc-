@@ -10,16 +10,29 @@ TEST=AllTests
 TSRC= $(SRCDIR)/AllTests.c $(SRCDIR)/CuTest.c $(SRCDIR)/checkUtil.c
 TOBJS= $(TSRC:.c=.o)
 
+
+CLANG=clang
+
+LLVM_LINK=llvm-link
+PROF=/home/m/monniaud
+
+KLEE = ${PROF}/packages/klee/2017-09-26_c7a1f9d/
+KLEE_EXEC=/bin/klee
+CFLAGS_KLEE=-Wall -Iinclude -g -I$(KLEE)/include
+BCFILES=obj/appli.bc obj/niveau.bc obj/save_load_highscore.bc obj/tableau.bc obj/check.bc obj/player.bc obj/redo.bc 
+
+
+
 all: $(EXEC)
 
 test: $(TEST)
 
 
-
 $(EXEC): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(EXEC)
 
-$(TEST) : $(TOBJS)
+
+$(TEST): $(TOBJS)
 	$(CC) $(CFLAGS) $(TOBJS) -o $(TEST)
 	./AllTests
 
@@ -29,18 +42,29 @@ gprof:
 	cat res_gprof.txt
 
 cov:
-	lcov --base-directory ./src/ --directory ./src/ -c -o rap.info
-	genhtml rap.info --output-directory out
+	lcov-1.13/bin/lcov --base-directory ./src/ --directory ./src/ -c -o rap.info
+	lcov-1.13/bin/genhtml rap.info --output-directory out
 
 
 missrate:
 	make
 	valgrind --tool=cachegrind --branch-sim=yes ./appli config1.xml
-	
-clean: 
-	
+
+
+klee: appli.bc
+	klee appli.bc config1.xml
+
+$(BCFILES): include/util.h include/niveau.h include/tableau.h include/save_load_highscore.h include/check.h include/player.h include/redo.h
+
+appli.bc: $(BCFILES)
+	$(LLVM_LINK) $+ -o $@
+
+obj/%.bc: src/%.c
+	$(CLANG) $(CFLAGS_KLEE) -DKLEE -c -emit-llvm $< -o $@
+
+clean:
 	rm -f $(EXEC) $(SRCDIR)/*.o
 	rm -f *.o
 	rm -f $(EXEC) $(SRCDIR)/*.gcno
 	rm -f $(EXEC) $(SRCDIR)/*.gcda
-
+	-rm -f appli.bc $(BCFILES)
