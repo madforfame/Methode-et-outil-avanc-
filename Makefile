@@ -33,7 +33,10 @@ cov:
 	genhtml rap.info --output-directory out
 
 
-
+missrate:
+	make
+	valgrind --tool=cachegrind --branch-sim=yes ./appli config1.xml
+	
 clean: 
 	
 	rm -f $(EXEC) $(SRCDIR)/*.o
