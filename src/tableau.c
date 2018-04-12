@@ -7,12 +7,15 @@
 
 /**
  * \fn int numX(char **board)
- * \brief Compte le nombre de "X" dans le tableau de jeu
+ * \brief Compte le nombre de "X" dans le tableau de jeu, jamais appelé
  *
  * \param board le plateau de jeu
  * 
  * \return le nombre de "X" dans board
  */
+
+
+/*
 int numX(char **board){
     int i, j, counter=0;
     for(i=height-1;i>=0;i--){
@@ -23,7 +26,7 @@ int numX(char **board){
         }
     }
     return counter;
-}
+}*/
 
 /**
  * \fn int numO(char **board)
@@ -33,7 +36,7 @@ int numX(char **board){
  * 
  * \return le nombre de "O" dans board
  */
-int numO(char **board){
+/*int numO(char **board){
     int i, j, counter=0;
     for(i=height-1;i>=0;i--){
         for(j=width-1;j>=0;j--){
@@ -43,7 +46,7 @@ int numO(char **board){
         }
     }
     return counter;
-}
+}*/
 
 /**
  * \fn int checkEmpty1(char **board,int num,int numOfrow)

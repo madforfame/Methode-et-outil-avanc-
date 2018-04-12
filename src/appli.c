@@ -44,26 +44,16 @@ int main(int argc, char *argv[]){
             compUndoCol[i] = 0;
             compUndoRow[i] = 0;
         }
-        
-        playAgain = 'n';
-        
-        if(playAgain != 'y'){
-			board = (char **)malloc(height*sizeof(char *));
-			for(i=0; i<height; i++){
-				board[i]=malloc(width*sizeof(char));
-				for(j=0; j<width; j++)
-				{
-					board[i][j]= VIDE;
-				}
+		board = (char **)malloc(height*sizeof(char *));
+		for(i=0; i<height; i++){
+			board[i]=malloc(width*sizeof(char));
+			for(j=0; j<width; j++)
+			{
+				board[i][j]= VIDE;
 			}
 		}
-		else{
-			for(i=0; i<height; i++){
-				for(j=0; j<width; j++){
-					board[i][j]= VIDE;
-				}
-			}
-		}
+		
+
 		printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
 		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\nComputer vs Computer (1000 fois sans affichage): press 3 \n");
 		choose = checkentier(choose);
@@ -339,7 +329,7 @@ int main(int argc, char *argv[]){
 					}
 				}
 				
-				choose=1;
+				choose=(rand()%3)+1;
 				do{
 					num=1;
 					switch(choose){
@@ -350,12 +340,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 						case 2: {
@@ -371,12 +356,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 						case 3:{
@@ -386,12 +366,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 					}
@@ -406,12 +381,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 						case 2: {
@@ -427,12 +397,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 						case 3:{
@@ -442,12 +407,7 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							if(num == 0){
-								compUndoCounter += 1;
-								c--;
-								d--;
-								board[compUndoRow[c]][compUndoCol[d]] = VIDE;
-							}
+							
 							break;
 						}
 					}
