@@ -90,17 +90,21 @@ void saveLoad(int *num, char **board){
             #endif
      
         pfile = fopen("save.txt", "w");
-        for(r=height-1;r>=0;r--){
-            for(t=width-1;t>=0;t--){
-                fprintf(pfile, "%c", board[r][t]);
-            }
-        }
-        fclose(pfile);
+        if(pfile!=NULL){
+			for(r=height-1;r>=0;r--){
+				for(t=width-1;t>=0;t--){
+					fprintf(pfile, "%c", board[r][t]);
+				}
+			}
+			fclose(pfile);
+		}
     }
     if(*num == -1){
         pfile = fopen("save.txt", "r");
         if (pfile == NULL){
+		#ifndef KLEE
 		perror("Le fichier de sauvegarde save.txt ne peut être ouvert ou n'existe pas \n");
+		#endif
 		}
 		else{
 			for(r=height-1;r>=0;r--){
