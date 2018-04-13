@@ -228,9 +228,9 @@ int main(int argc, char *argv[]){
                         print(board);
                         #ifndef KLEE
                             printf("Invalid input number 3. Do another move : ");
+                            #endif
                             num = checkentier(num);
                             num = checknum(num,board,width);
-                            #endif
                      
                         saveLoad(&num, board);
                         if(num == 0 || num == -3){
@@ -487,8 +487,6 @@ int main(int argc, char *argv[]){
         #endif
         
         q=0; z=0; d=0; c=0;
-      
-      
     }while(playAgain == 'y');
     return 0;
 }

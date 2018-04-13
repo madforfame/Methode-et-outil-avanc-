@@ -59,8 +59,10 @@ int checkentier(int num){
 		#else
 		err=scanf("%i", &num);
 		#endif
-
+		
+		#ifndef KLEE
 		getchar();
+		#endif
 		if(err<1){
 			#ifndef KLEE
 			printf("\nPlease enter a number: ");
