@@ -168,6 +168,7 @@ int rowNum(int num, char **board){
  * \param board le plateau de jeu
  */
 void print(char **board){
+    #ifndef KLEE
     int i, j;
     for(i=0; i<height; i++){
         printf("\n+");
@@ -195,6 +196,7 @@ void print(char **board){
     }
    
     printf("\n\n\n");
+    #endif
 }
 
 /**
@@ -301,6 +303,7 @@ int verticalScore(char **board, char character){
  * \param score2 score du joueur 2
  */
 void afficherScores(int score1, int score2){
+    #ifndef KLEE
 	 printf("\n***************************************************");
 	printf("\n***************************************************");
 	printf("\n**                      **                       **");
@@ -308,4 +311,5 @@ void afficherScores(int score1, int score2){
 	printf("\n**                      **                       **");
 	printf("\n***************************************************");
 	printf("\n***************************************************");
+    #endif
 }
