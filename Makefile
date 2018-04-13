@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-Wall -pg -Iinclude -fprofile-arcs -ftest-coverage
+CFLAGS=-Wall -pg -Iinclude 
+COVFLAGS=-fprofile-arcs -ftest-coverage
 
 EXEC=appli
 SRC = $(SRCDIR)/appli.c $(SRCDIR)/niveau.c $(SRCDIR)/save_load_highscore.c $(SRCDIR)/tableau.c $(SRCDIR)/redo.c $(SRCDIR)/player.c $(SRCDIR)/check.c
@@ -9,6 +10,8 @@ OBJS = $(SRC:.c=.o)
 TEST=AllTests
 TSRC= $(SRCDIR)/AllTests.c $(SRCDIR)/CuTest.c $(SRCDIR)/checkUtil.c
 TOBJS= $(TSRC:.c=.o)
+
+AFL=appli2
 
 
 CLANG=clang
@@ -27,14 +30,20 @@ all: $(EXEC)
 
 test: $(TEST)
 
+afl: $(AFL)
+
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(EXEC)
+	$(CC) $(CFLAGS) $(COVFLAGS) $(OBJS) -o $(EXEC)
 
 
 $(TEST): $(TOBJS)
 	$(CC) $(CFLAGS) $(TOBJS) -o $(TEST)
 	./AllTests
+
+$(AFL): $(OBJS)
+	afl-gcc $(OBJS) -o $(AFL)
+	AFL_I_DONT_CARE_ABOUT_MISSING_CRASHES=ON AFL_SKIP_CPUFREQ=1 afl-fuzz -m2G -n -i afl_in/ -o afl_out/ ./appli2 config1.xml
 
 gprof:
 	make 
