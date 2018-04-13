@@ -29,6 +29,9 @@ int main(int argc, char *argv[]){
 		perror("ERREUR D'ARGUMENT");
 		exit(0);
 	}
+    #ifdef AFL 
+        test = fopen(argv[2],"r");
+    #endif
     XMLformating(argv[1]);
     char playAgain;
     do{
@@ -78,12 +81,11 @@ int main(int argc, char *argv[]){
 			int player=1;
             print(board);
             do{
-               #ifndef KLEE
-	        printf("\nif you want to undo, press 0\n");
-	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
-            #endif
+                #ifndef KLEE
+	            printf("\nif you want to undo, press 0\n");
+	            printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
+                #endif
                 if((player==1) ||  (player==2)){
-                    
                     if(player==1){
                         #ifndef KLEE
 						printf("\nplayer 1 enter number of the column:");
@@ -95,13 +97,11 @@ int main(int argc, char *argv[]){
                         #endif
 					}
                     num = checkentier(num);
-                    num = checknum(num,board,width);
-                  
+                    num = checknum(num,board,width); 
                     saveLoad(&num, board);
                     if(checkCol(num,board)){
                         while(num>0 && board[0][num-1]!=VIDE){
                             print(board);
-                            
                             if(player==1){
                                #ifndef KLEE
 								printf("Invalid input player 1. Do another move : ");
@@ -113,8 +113,7 @@ int main(int argc, char *argv[]){
                                #endif
 							}
 							num = checkentier(num);
-							num = checknum(num,board,width);
-                            
+							num = checknum(num,board,width);  
                             saveLoad(&num, board);
                             if(num == 0 || num == -3){
                                 break;
@@ -137,23 +136,21 @@ int main(int argc, char *argv[]){
                     }
                     while(num == 0 && checkEmpty(board)){
                         print(board);
-                       #ifndef KLEE
-                            printf("\ncannot undo! play again\n");
-                            #endif
-                            num = checkentier(num);
-                            num = checknum(num,board,width);
-                    
+                        #ifndef KLEE
+                        printf("\ncannot undo! play again\n");
+                        #endif
+                        num = checkentier(num);
+                        num = checknum(num,board,width);
                         saveLoad(&num, board);
                         if(num == -3){
                             if(redoCounter >= undoCounter){
                                 while(num == -3){
                                     print(board);
-                                 #ifndef KLEE
-                                        printf("\ncannot redo!! play again");
-                                        #endif
-                                        num = checkentier(num);
-                                        num = checknum(num,board,width);
-                                 
+                                    #ifndef KLEE
+                                    printf("\ncannot redo!! play again");
+                                    #endif
+                                    num = checkentier(num);
+                                    num = checknum(num,board,width);
                                     if(num == 0){
                                         break;
                                     }
@@ -170,8 +167,7 @@ int main(int argc, char *argv[]){
 						undoRedo(&o,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
 						score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
 						player=1;
-					}
-                    
+					}   
                     afficherScores(score1,score2);
                 }
             }while(checkfull(board));
@@ -197,21 +193,18 @@ int main(int argc, char *argv[]){
             }
         }
         else if(choose==2){
-
-                #ifndef KLEE
-                printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
-                
-                #endif
-                choose = checkentier(choose);
-         
+            #ifndef KLEE
+            printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
+            #endif
+            choose = checkentier(choose);
             while(choose!=1 && choose!=2 && choose!=3){
                 #ifndef KLEE
-				printf("Enter 1 , 2 or 3\n");
-				printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
+                printf("Enter 1 , 2 or 3\n");
+                printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
                 #endif
-				choose = checkentier(choose);
-            }
-            print(board);
+                choose = checkentier(choose);
+             }
+                 print(board);
             do{
                 #ifndef KLEE
 				printf("\nif you want to undo, press 0\n");
@@ -220,18 +213,16 @@ int main(int argc, char *argv[]){
                 #endif
 				num = checkentier(num);
 				num = checknum(num,board,width);
-             
                 saveLoad(&num, board);
                 if(checkCol(num,board)){
                     while(num>0 && board[0][num-1]!=VIDE)
                       {
                         print(board);
                         #ifndef KLEE
-                            printf("Invalid input number 3. Do another move : ");
-                            #endif
-                            num = checkentier(num);
-                            num = checknum(num,board,width);
-                     
+                        printf("Invalid input number 3. Do another move : ");
+                        #endif
+                        num = checkentier(num);
+                        num = checknum(num,board,width);
                         saveLoad(&num, board);
                         if(num == 0 || num == -3){
                             break;
@@ -242,11 +233,10 @@ int main(int argc, char *argv[]){
                     while(num == -3){
                         print(board);
                         #ifndef KLEE
-                            printf("\ncannot redo!! play again");
-                            #endif
-                            num = checkentier(num);
-                            num = checknum(num,board,width);
-                 
+                        printf("\ncannot redo!! play again");
+                        #endif
+                        num = checkentier(num);
+                        num = checknum(num,board,width);
                         saveLoad(&num, board);
                         if(num == 0){
                             break;
@@ -256,10 +246,10 @@ int main(int argc, char *argv[]){
                 while(num == 0 && checkEmpty(board)){
                     print(board);
                     #ifndef KLEE
-                        printf("\ncannot undo! play again");
-                        #endif
-                        num = checkentier(num);
-                        num = checknum(num,board,width);
+                    printf("\ncannot undo! play again");
+                    #endif
+                    num = checkentier(num);
+                    num = checknum(num,board,width);
                     saveLoad(&num, board);
                     if(num == -3){
                         if(redoCounter >= compUndoCounter){
@@ -270,7 +260,6 @@ int main(int argc, char *argv[]){
                                 #endif
                                 num = checkentier(num);
                                 num = checknum(num,board,width);
-                             
                                 saveLoad(&num, board);
                                 if(num == 0){
                                     break;
@@ -282,9 +271,7 @@ int main(int argc, char *argv[]){
                 undoRedoLimit(num,&undoCounter,&redoCounter);
                 undoRedo(&x,board,num,undoCol,undoRow,&k,&l,&z,redoCol,redoRow,&q,width);
                 score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
-             
                 afficherScores(score1,score2);
-             
                 switch(choose)
                 {
                     case 1:{
@@ -341,7 +328,6 @@ int main(int argc, char *argv[]){
                 }
                 print(board);
                 score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
-               
                 afficherScores(score1,score2);
             }while(checkfull(board));
             if(score2>score1){
@@ -355,7 +341,6 @@ int main(int argc, char *argv[]){
                 #ifndef KLEE
                 printf("\nDRAW\n");
                 #endif
-     
             }
             else{
                 high=score1;
@@ -366,14 +351,12 @@ int main(int argc, char *argv[]){
         }else{
 			mem=1;
 			for(int i=0;i<1000;i++){
-				
 				q=0; z=0; d=0; c=0;
 				for(j=0; j<height; j++){
 					for(k=0; k<width; k++){
 						board[j][k]= VIDE;
 					}
 				}
-				
 				choose=(rand()%3)+1;
 				do{
 					num=1;
@@ -385,7 +368,6 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							
 							break;
 						}
 						case 2: {
@@ -411,13 +393,11 @@ int main(int argc, char *argv[]){
 								compUndoRow[c++] = rowNum(num,board)+1;
 								compUndoCounter = 0;
 							}
-							
 							break;
 						}
 					}
 					 
 					score1=horizontalScore(board,x)+verticalScore(board,x)+diagonal(board,x)+diagonal1(board,x);
-				 
 					switch(choose){
 						case 1:{
 							if(num != 0 && num != -1 && num != -2){
@@ -465,7 +445,6 @@ int main(int argc, char *argv[]){
 				}
 				else if(score1==score2){
 					high=score1;
-		 
 				}
 				else{
 					high=score1;
@@ -483,9 +462,12 @@ int main(int argc, char *argv[]){
         #ifdef KLEE
         klee_make_symbolic(&playAgain, sizeof(char), "playAgain appli.c");
         #else
+        #ifndef AFL  
         scanf("\n%c",&playAgain);
+        #else 
+        fscanf(test,"%c",&playAgain);
         #endif
-        
+        #endif
         q=0; z=0; d=0; c=0;
     }while(playAgain == 'y');
     return 0;

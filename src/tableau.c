@@ -151,9 +151,6 @@ int checkfull(char **board){
 int rowNum(int num, char **board){
     int i=0;
     for(i=0;i<height;i++){
-        if(num == 0){
-        	return 0;
-        }
         if(board[i][num-1]!=VIDE){
         	break;
         }
@@ -168,33 +165,49 @@ int rowNum(int num, char **board){
  * \param board le plateau de jeu
  */
 void print(char **board){
-    #ifndef KLEE
+   
     int i, j;
     for(i=0; i<height; i++){
+         #ifndef KLEE
         printf("\n+");
+         #endif
 
         for(j=0; j<width; j++){
+             #ifndef KLEE
             printf("---+");
+             #endif
         }
+             #ifndef KLEE
         
         printf("\n|");
+         #endif
    
         for(j=0; j<width; j++){
+             #ifndef KLEE
+            
             printf(" %c |", board[i][j]);
+                #endif
         }
     }
+      #ifndef KLEE
     printf("\n+");
+        #endif
 
     for(i=0; i<width; i++){
+             #ifndef KLEE
+        
         printf("---+");
+            #endif
     }
 
     printf("\n");
  
     for(i=1;i<=width;i++){
+        #ifndef KLEE
         printf("  %d ",i);
+        #endif
     }
-   
+     #ifndef KLEE
     printf("\n\n\n");
     #endif
 }

@@ -57,7 +57,11 @@ int checkentier(int num){
 		#ifdef KLEE
 		klee_make_symbolic(&num, sizeof(int), "err check.c");
 		#else
+		#ifdef AFL
+		fscanf(test,"%i",&num);
+		#else
 		err=scanf("%i", &num);
+		#endif
 		#endif
 		
 		#ifndef KLEE
