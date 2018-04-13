@@ -52,17 +52,23 @@ void highscore(int high, int print){
         }
         highsc = fopen("highscores.text", "w");
         if(print){
+            #ifndef KLEE
 			printf("\n\t      High Scores\n\t\t*****");
+            #endif
 		}
         for(i=0; i<highscores; i++)
         {
             fprintf(highsc,"%d ", highs[i]);
             if(print){
+                #ifndef KLEE
 				printf("\n\t\t* %d *", highs[i]);
+                #endif
 			}
         }
         if(print){
+            #ifndef KLEE
 			printf("\n\t\t*****");
+            #endif
 		}
         fclose(highsc);
     }
@@ -79,8 +85,9 @@ void saveLoad(int *num, char **board){
     FILE *pfile;
     int r, t;
     if(*num == -2){
-    
+    #ifndef KLEE
             printf("Game Saved Successfully");
+            #endif
      
         pfile = fopen("save.txt", "w");
         for(r=height-1;r>=0;r--){

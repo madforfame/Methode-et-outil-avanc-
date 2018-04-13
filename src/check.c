@@ -6,6 +6,10 @@
 
 #include "check.h"
 
+#ifdef KLEE
+#include <klee/klee.h>
+#endif
+
 
 
 /**
@@ -22,10 +26,11 @@ int checknum(int num, char **board ,int width){
     while((num<-3) || (num>width))
     {
         print(board);
-    
+    #ifndef KLEE
             printf("\nPlease enter a number between 1 and %d to play\n", width);
             printf("if you want to undo, press 0\n");
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
+	        #endif
             num = checkentier(num);
        
     }
@@ -41,14 +46,26 @@ int checknum(int num, char **board ,int width){
  * \return l'entrée utilisateur valide
  */
 int checkentier(int num){
+	#ifndef KLEE
 	int err =0;
+	#else
+	int err=1;
+	#endif
 	
-	while(err<1){
-		err=scanf("%d", &num);
+	do{
+
+		#ifdef KLEE
+		klee_make_symbolic(&num, sizeof(int), "err check.c");
+		#else
+		err=scanf("%i", &num);
+		#endif
+
 		getchar();
 		if(err<1){
+			#ifndef KLEE
 			printf("\nPlease enter a number: ");
+			#endif
 		}
-	}
+	}while(err<1);
     return num;
 }
