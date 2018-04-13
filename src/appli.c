@@ -10,6 +10,10 @@
 #include "player.h"
 #include "check.h"
 
+#ifdef KLEE
+#include <klee/klee.h>
+#endif
+
 void XMLformating();
 
 
@@ -29,7 +33,7 @@ int main(int argc, char *argv[]){
     char playAgain;
     do{
         int flag, score1=0, score2=0, *compUndoCol, undoCounter=0,
-            redoCounter=0, compUndoCounter =0, choose, mem=0;
+            redoCounter=0, compUndoCounter =0, choose=0, mem=0;
         int i, j, num=0, *undoCol, k, *undoRow,
             *redoCol, *redoRow, l, *compUndoRow;
         static int q=0, z=0, d=0, c=0;
@@ -57,14 +61,16 @@ int main(int argc, char *argv[]){
 			}
 		}
 		
-
+        #ifndef KLEE
 		printf("\n\n                     **** WELCOME TO THE GAME ****\n\n");
 		printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\nComputer vs Computer (1000 fois sans affichage): press 3 \n");
+        #endif
 		choose = checkentier(choose);
         while((choose!=1 && choose!=2 && choose!=3) || isalpha(choose)){
-       
+           #ifndef KLEE
             printf("Enter 1 or 2 or 3\n");
 	        printf("Player1 vs Player2: press 1 \n\nPlayer vs Computer: press 2 \n\nComputer vs Computer (1000 fois sans affichage): press 3 \n");
+            #endif
             choose = checkentier(choose);
            
         }
@@ -72,17 +78,21 @@ int main(int argc, char *argv[]){
 			int player=1;
             print(board);
             do{
-                
+               #ifndef KLEE
 	        printf("\nif you want to undo, press 0\n");
 	        printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
-            
+            #endif
                 if((player==1) ||  (player==2)){
                     
                     if(player==1){
+                        #ifndef KLEE
 						printf("\nplayer 1 enter number of the column:");
+                        #endif
 					}
 					else{
+                        #ifndef KLEE
 						printf("\nplayer 2 enter number of the column:");
+                        #endif
 					}
                     num = checkentier(num);
                     num = checknum(num,board,width);
@@ -93,10 +103,14 @@ int main(int argc, char *argv[]){
                             print(board);
                             
                             if(player==1){
+                               #ifndef KLEE
 								printf("Invalid input player 1. Do another move : ");
+                                #endif
 							}
 							else{
+                               #ifndef KLEE
 								printf("Invalid input player 2. Do another move : ");
+                               #endif
 							}
 							num = checkentier(num);
 							num = checknum(num,board,width);
@@ -109,8 +123,10 @@ int main(int argc, char *argv[]){
                     }
                     if(redoCounter >= undoCounter){
                         while(num == -3){
+                           #ifndef KLEE
                             print(board);
 							printf("\ncannot redo!! play again");
+                            #endif
 							num = checkentier(num);
 							num = checknum(num,board,width);
                             saveLoad(&num, board);
@@ -121,7 +137,9 @@ int main(int argc, char *argv[]){
                     }
                     while(num == 0 && checkEmpty(board)){
                         print(board);
+                       #ifndef KLEE
                             printf("\ncannot undo! play again\n");
+                            #endif
                             num = checkentier(num);
                             num = checknum(num,board,width);
                     
@@ -130,7 +148,9 @@ int main(int argc, char *argv[]){
                             if(redoCounter >= undoCounter){
                                 while(num == -3){
                                     print(board);
+                                 #ifndef KLEE
                                         printf("\ncannot redo!! play again");
+                                        #endif
                                         num = checkentier(num);
                                         num = checknum(num,board,width);
                                  
@@ -158,34 +178,46 @@ int main(int argc, char *argv[]){
 
             if(score2>score1){
                 high=score2;
+                #ifndef KLEE
                 printf("\nPLAYER 2 WINS");
+                #endif
               
             }
             else if(score1==score2){
                 high=score1;
+                #ifndef KLEE
                 printf("\nDRAW");
+                #endif
             }
             else{
                 high=score1;
+                #ifndef KLEE
                 printf("\nPLAYER 1 WINS");
+                #endif
             }
         }
         else if(choose==2){
 
+                #ifndef KLEE
                 printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
+                
+                #endif
                 choose = checkentier(choose);
          
             while(choose!=1 && choose!=2 && choose!=3){
+                #ifndef KLEE
 				printf("Enter 1 , 2 or 3\n");
 				printf("\nEasy (press 1), Medium (press 2), Hard (press 3)\n");
+                #endif
 				choose = checkentier(choose);
-            
             }
             print(board);
             do{
+                #ifndef KLEE
 				printf("\nif you want to undo, press 0\n");
 				printf("if you want to redo, press -3, to load, press -1, to save, press -2\n");
 				printf("\nenter number of the column:");
+                #endif
 				num = checkentier(num);
 				num = checknum(num,board,width);
              
@@ -194,9 +226,11 @@ int main(int argc, char *argv[]){
                     while(num>0 && board[0][num-1]!=VIDE)
                       {
                         print(board);
+                        #ifndef KLEE
                             printf("Invalid input number 3. Do another move : ");
                             num = checkentier(num);
                             num = checknum(num,board,width);
+                            #endif
                      
                         saveLoad(&num, board);
                         if(num == 0 || num == -3){
@@ -207,7 +241,9 @@ int main(int argc, char *argv[]){
                 if(redoCounter >= compUndoCounter){
                     while(num == -3){
                         print(board);
+                        #ifndef KLEE
                             printf("\ncannot redo!! play again");
+                            #endif
                             num = checkentier(num);
                             num = checknum(num,board,width);
                  
@@ -219,7 +255,9 @@ int main(int argc, char *argv[]){
                 }
                 while(num == 0 && checkEmpty(board)){
                     print(board);
+                    #ifndef KLEE
                         printf("\ncannot undo! play again");
+                        #endif
                         num = checkentier(num);
                         num = checknum(num,board,width);
                     saveLoad(&num, board);
@@ -227,7 +265,9 @@ int main(int argc, char *argv[]){
                         if(redoCounter >= compUndoCounter){
                             while(num == -3){
                                 print(board);
+                                #ifndef KLEE
                                 printf("\ncannot redo!! play again");
+                                #endif
                                 num = checkentier(num);
                                 num = checknum(num,board,width);
                              
@@ -303,26 +343,27 @@ int main(int argc, char *argv[]){
                 score2=horizontalScore(board,o)+verticalScore(board,o)+diagonal(board,o)+diagonal1(board,o);
                
                 afficherScores(score1,score2);
-              
             }while(checkfull(board));
             if(score2>score1){
                 high=score2;
-       
+                #ifndef KLEE
                 printf("\nComputer WINS\n");
-               
+                #endif 
             }
             else if(score1==score2){
                 high=score1;
-     
+                #ifndef KLEE
                 printf("\nDRAW\n");
+                #endif
      
             }
             else{
                 high=score1;
+                #ifndef KLEE
                 printf("\nUser WINS\n");
+                #endif
             }
-        }
-        else{
+        }else{
 			mem=1;
 			for(int i=0;i<1000;i++){
 				
@@ -436,9 +477,14 @@ int main(int argc, char *argv[]){
 			exit(0);
 		}
         highscore(high,1);
-   
+   #ifndef KLEE
         printf("\nif you you want to play again press y, else press any key\n");
+        #endif
+        #ifdef KLEE
+        klee_make_symbolic(&playAgain, sizeof(char), "playAgain appli.c");
+        #else
         scanf("\n%c",&playAgain);
+        #endif
         
         q=0; z=0; d=0; c=0;
       
@@ -514,15 +560,21 @@ void XMLformating(char* nomfichier){
 		}
 		if(width==0 || widthflag==0){
 			width=7;
+            #ifndef KLEE
 			printf("Incorrect file format, default value of width (7) is loaded\n");
+            #endif
 		}
 		if(height==0 || heightflag==0){
 			height=6;
+            #ifndef KLEE
 			printf("Incorrect file format, default value of height (6) is loaded\n");
+            #endif
 		}
 		if(highscores==0 || highscoresflag==0){
 			highscores=5;
+            #ifndef KLEE
 			printf("Incorrect file format, default value of highscore list (5) is loaded\n");
+            #endif
 		}
 		fclose(file);
 	}
