@@ -13,9 +13,9 @@ Pour lancer gprof, utiliser la commande "make gprof".
 
 Pour  lancer Valgrind avec l'option permettant de tester les performances, utiliser la commande "make missrate".
 
-Pour lancer klee, utiliser la commande "make klee".
+Pour lancer klee, utiliser les commandes "source ~monniaud/env.sh" puis "make klee".
 
-Pour lancer afl, utiliser la commande "make afl CFLAGS='-Wall -pg -Iinclude' ".
+Pour lancer afl, utiliser les commandes "source ~mounlaur/installe_afl.sh" puis "make afl CFLAGS='-Wall -pg -Iinclude' ".
 
 A chaque fois qu'une option est utilisée, elle prendra en fichier de configuration le fichier nommé "config1.xml" automatiquement.
 
