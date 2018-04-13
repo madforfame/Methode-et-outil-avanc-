@@ -92,13 +92,15 @@ void undoRedo(char *x, char **board, int num, int *undoCol,
             }
         }
         else if(num == -1){
- 
+ #ifndef KLEE
             printf("Game Loaded Successfully");
+            #endif
      
         }
         else if(num == -2){
-  
+  #ifndef KLEE
             printf("Game saved Successfully");
+            #endif
             print(board);
   
         }
